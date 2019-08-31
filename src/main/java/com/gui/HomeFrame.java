@@ -30,7 +30,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     //definir varíaveis
     private static final PinState pinStateOn = PinState.HIGH;
     private static final PinState pinStateOff = PinState.LOW;
-    private static final Pin relayVentInv = RaspiPin.GPIO_00;
+    private static final Pin relayVentInv = RaspiPin.GPIO_17;
     private static final String relayVentInvName = "Relay Inverno";
     private static final Pin relayVentVer = RaspiPin.GPIO_01;
     private static final String relayVentVerName = "Relay Verão";
@@ -418,18 +418,18 @@ public final class HomeFrame extends javax.swing.JFrame {
         //Relay Inverno Ligado
         RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
         //Relay Verão Desligado
-        RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
-        //Valvula A a OFF
-        RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
-        //Abrir a valvula B e esperar durante X segundos para poder desligar
-        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
-        try {
-            sleep(8);
-
-        } catch (InterruptedException ex) {
-            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
+//        RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
+//        //Valvula A a OFF
+//        RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
+//        //Abrir a valvula B e esperar durante X segundos para poder desligar
+//        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
+//        try {
+//            sleep(8);
+//
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
 
 
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
