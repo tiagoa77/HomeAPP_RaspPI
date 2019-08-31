@@ -419,9 +419,9 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         try {
             //Relay Inverno Ligado
-            RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
+            RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOff);
             //Relay Verão Desligado
-            RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOn);
+            RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
             //Valvula A a OFF
             RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
             //Abrir a valvula B e esperar durante X segundos para poder desligar
