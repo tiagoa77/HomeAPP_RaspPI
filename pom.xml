@@ -85,7 +85,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.gui.HomeFrame</mainClass>
+                            <mainClass>com.gcdui.HomeFrame</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

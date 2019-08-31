@@ -5,8 +5,7 @@
  */
 package com.gui;
 
-import com.classes.DHT11;
-import com.classes.DS18B20;
+import com.classes.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.classes.Sistema;
@@ -15,9 +14,10 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import com.classes.Funcoes;
+import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.impl.GpioPinImpl;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
-
 /**
  *
  * @author tfaugusto
@@ -40,6 +40,12 @@ public final class HomeFrame extends javax.swing.JFrame {
         wiredSensorTemps("28-020192453134",1,2000,"ARNOVO");
         wiredSensorTemps("28-03129779f399",1,2000,"ARINSUFLACAO");
         wiredSensorTemps("28-031597793897",1,2000,"RETORNO");
+        
+
+        
+        
+        RelayCircuit.controlRelayCircuit(RaspiPin.GPIO_00, "teste", PinState.HIGH);
+
         
         
     }
