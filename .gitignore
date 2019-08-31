@@ -1,0 +1,6 @@
+# Ignore file named `README.txt`
+README.txt
+
+# Ignore folder `target`
+target/
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
