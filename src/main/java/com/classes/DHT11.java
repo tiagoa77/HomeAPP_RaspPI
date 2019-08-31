@@ -12,7 +12,6 @@ package com.classes;
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.GpioUtil;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *
@@ -23,13 +22,13 @@ public class DHT11 {
     private final int[]         dht11_dat   = { 0, 0, 0, 0, 0 };
     private Float oldTemp = 0.0f;
     private Float oldHum = 0.0f;
-    private List<String> result;
+ 
 
     public DHT11() {
 
         // setup wiringPi
         if (Gpio.wiringPiSetup() == -1) {
-            System.out.println(" ==>> GPIO SETUP FAILED");
+            //System.out.println(" ==>> GPIO SETUP FAILED");
             return;
         }
 
@@ -98,7 +97,7 @@ public class DHT11 {
             output.put("Temperatura",c);
             output.put("Humidade",h);
             
-            System.out.println("Humidity = " + output.get(0) + " Temperature = " + output.get(1) + "(" + f + "f)");
+            //System.out.println("Humidity = " + output.get(0) + " Temperature = " + output.get(1) + "(" + f + "f)");
             
             
             
@@ -107,7 +106,7 @@ public class DHT11 {
             output.put("Temperatura",oldTemp);
             output.put("Humidade",oldHum);
             
-            System.out.println("Humidity = " + oldHum + " Temperature = " +oldTemp);
+            //System.out.println("Humidity = " + oldHum + " Temperature = " +oldTemp);
         }
         return output;
     }

@@ -15,9 +15,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import com.classes.Funcoes;
 import com.pi4j.io.gpio.*;
-import com.pi4j.io.gpio.impl.GpioPinImpl;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
+
 /**
  *
  * @author tfaugusto
@@ -27,27 +27,34 @@ public final class HomeFrame extends javax.swing.JFrame {
     //Declarar sistema
     private final Sistema sistema;
 
+    //definir varíaveis
+    private static final PinState pinStateOn = PinState.HIGH;
+    private static final PinState pinStateOff = PinState.LOW;
+    private static final Pin relayVentInv = RaspiPin.GPIO_00;
+    private static final String relayVentInvName = "Relay Inverno";
+    private static final Pin relayVentVer = RaspiPin.GPIO_01;
+    private static final String relayVentVerName = "Relay Verão";
+    private static final Pin relayValvulaA = RaspiPin.GPIO_02;
+    private static final String relayValvulaAName = "Relay Valvula A";
+    private static final Pin relayValvulaB = RaspiPin.GPIO_03;
+    private static final String relayValvulaBName = "Relay Valvula B";
+
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
-        
+
         this.sistema = s;
         initComponents();
         clock();
-        
+
         //Não está a efetuar ações -> deveria ser na main
         jToggleButtonOff.setSelected(true);
-        
+
         getTempHumidade(2000);
-        wiredSensorTemps("28-020192453134",1,2000,"ARNOVO");
-        wiredSensorTemps("28-03129779f399",1,2000,"ARINSUFLACAO");
-        wiredSensorTemps("28-031597793897",1,2000,"RETORNO");
-        
+        wiredSensorTemps("28-020192453134", 1, 2000, "ARNOVO");
+        wiredSensorTemps("28-03129779f399", 1, 2000, "ARINSUFLACAO");
+        wiredSensorTemps("28-031597793897", 1, 2000, "RETORNO");
 
-        
-        
-        RelayCircuit.controlRelayCircuit(RaspiPin.GPIO_00, "teste", PinState.HIGH);
+        RelayCircuit.controlRelayCircuit(relayVentInv, "teste", pinStateOn);
 
-        
-        
     }
 
     public void clock() {
@@ -405,24 +412,42 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     private void jToggleButtonOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonOffActionPerformed
         // ButtonActions
-        
+
         jToggleButtonManual.setSelected(false);
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
-        
+
+        try {
+            //Relay Inverno Ligado
+            RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
+            //Relay Verão Desligado
+            RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOn);
+            //Valvula A a OFF
+            RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
+            //Abrir a valvula B e esperar durante X segundos para poder desligar
+            RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
+            sleep(8);
+            RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
 
     private void jToggleButtonManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonManualActionPerformed
         // ButtonActions
-        
+
         jToggleButtonOff.setSelected(false);
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
+
+        RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOn);
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
     private void jToggleButtonInvernoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonInvernoActionPerformed
         // ButtonActions
-        
+
         jToggleButtonOff.setSelected(false);
         jToggleButtonManual.setSelected(false);
         jToggleButtonVerao.setSelected(false);
@@ -430,7 +455,7 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     private void jToggleButtonVeraoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonVeraoActionPerformed
         // ButtonActions
-        
+
         jToggleButtonOff.setSelected(false);
         jToggleButtonManual.setSelected(false);
         jToggleButtonInverno.setSelected(false);
@@ -438,7 +463,7 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         // TODO add your handling code here:
-        
+
         System.exit(0);
     }//GEN-LAST:event_jButtonSairActionPerformed
 
