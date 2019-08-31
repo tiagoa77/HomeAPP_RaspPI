@@ -53,8 +53,6 @@ public final class HomeFrame extends javax.swing.JFrame {
         wiredSensorTemps("28-03129779f399", 1, 2000, "ARINSUFLACAO");
         wiredSensorTemps("28-031597793897", 1, 2000, "RETORNO");
 
-        RelayCircuit.controlRelayCircuit(relayVentInv, "teste", pinStateOn);
-
     }
 
     public void clock() {
@@ -417,20 +415,21 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
 
+        //Relay Inverno Ligado
+        RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
+        //Relay Verão Desligado
+        RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
+        //Valvula A a OFF
+        RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
+        //Abrir a valvula B e esperar durante X segundos para poder desligar
+        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
         try {
-            //Relay Inverno Ligado
-            RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOff);
-            //Relay Verão Desligado
-            RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
-            //Valvula A a OFF
-            RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
-            //Abrir a valvula B e esperar durante X segundos para poder desligar
-            RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
             sleep(8);
-            RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
+
         } catch (InterruptedException ex) {
             Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
 
 
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
