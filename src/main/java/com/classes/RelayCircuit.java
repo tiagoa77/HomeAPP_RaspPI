@@ -37,10 +37,6 @@ public class RelayCircuit {
                 GpioUtil.export(0, GpioUtil.DIRECTION_OUT);
                 
                 GpioPinDigitalOutput relayLED1 = gpioRelay.provisionDigitalOutputPin(pinCode, pinName, pinState);
-                
-                introduceDelay(5000);
-                relayLED1.low();
-		
 	}
 	
 	/**
