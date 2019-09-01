@@ -423,7 +423,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         
         
         // create gpio controller
-        gpio.high();
+        output.high();
   
             
         
@@ -490,7 +490,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         
     
 
-         gpio.low();
+         output.low();
         
         
         
