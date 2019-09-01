@@ -16,6 +16,7 @@ import java.util.GregorianCalendar;
 import com.classes.Funcoes;
 import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.impl.GpioControllerImpl;
+import java.awt.event.ActionEvent;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
 
@@ -418,20 +419,20 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     private void jToggleButtonOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonOffActionPerformed
         // ButtonActions
-
-        jToggleButtonManual.setSelected(false);
-        jToggleButtonInverno.setSelected(false);
-        jToggleButtonVerao.setSelected(false);
-
-        //Relay Inverno Desligado
-        relay1.high();
-        //Relay Verão Desligado
-        relay2.low();
-        //Valvula A a OFF
-        relay3.low();
-        //Abrir a valvula B e esperar durante X segundos para poder desligar
-        relay4.high();
         try {
+            jToggleButtonManual.setSelected(false);
+            jToggleButtonInverno.setSelected(false);
+            jToggleButtonVerao.setSelected(false);
+
+            //Relay Inverno Desligado
+            relay1.high();
+            //Relay Verão Desligado
+            relay2.low();
+            //Valvula A a OFF
+            relay3.low();
+            //Abrir a valvula B e esperar durante X segundos para poder desligar
+            relay4.high();
+
             sleep(8);
 
         } catch (InterruptedException ex) {
@@ -446,16 +447,16 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonOff.setSelected(false);
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
-        
+
         //Relay Inverno Desligado
-        relay1.high();
+        relay1.low();
         //Relay Verão Desligado
-        relay2.low();
+        relay2.high();
         //Valvula A a OFF
         relay3.low();
         //Valvula B a OFF
         relay4.low();
-        
+
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
     private void jToggleButtonInvernoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonInvernoActionPerformed
@@ -472,7 +473,6 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonOff.setSelected(false);
         jToggleButtonManual.setSelected(false);
         jToggleButtonInverno.setSelected(false);
-
 
 
     }//GEN-LAST:event_jToggleButtonVeraoActionPerformed
@@ -512,6 +512,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
