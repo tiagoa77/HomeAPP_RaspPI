@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import com.classes.Funcoes;
 import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.impl.GpioControllerImpl;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
 
@@ -416,29 +417,42 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonManual.setSelected(false);
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
+        
+        
+        // create gpio controller
+        final GpioController gpio = GpioFactory.getInstance();
+        // provision gpio pin as an output pin and turn on
+        final GpioPinDigitalOutput output = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "My Output", PinState.HIGH);
+  
+            
+        
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        output.toggle();
+        
+//        RelayCircuit.controlRelayCircuit(gpioRelay,relayVentInv, relayVentInvName, pinStateOn);
+//        
+//        
+//        //Relay Verão Desligado
+//        RelayCircuit.controlRelayCircuit(gpioRelay,relayVentVer, relayVentVerName, pinStateOff);
+//        //Valvula A a OFF
+//        RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaA, relayValvulaAName, pinStateOff);
+//        //Abrir a valvula B e esperar durante X segundos para poder desligar
+//        RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOn);
+//        try {
+//            sleep(8);
+//
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOff);
+//            
 
-        Thread relay = new Thread() {
-            public void run() {
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayVentInv, relayVentInvName, pinStateOn);
-                //Relay Verão Desligado
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayVentVer, relayVentVerName, pinStateOff);
-                //Valvula A a OFF
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaA, relayValvulaAName, pinStateOff);
-                //Abrir a valvula B e esperar durante X segundos para poder desligar
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOn);
-                try {
-                    sleep(8);
-
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOff);
-            }
-
-        };
-
-        relay.start();
-
+        
 
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
 
@@ -451,6 +465,9 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         Thread relay = new Thread() {
             public void run() {
+                
+                
+                
                 RelayCircuit.controlRelayCircuit(gpioRelay,relayVentInv, relayVentInvName, pinStateOff);
                 //Relay Verão Desligado
                 RelayCircuit.controlRelayCircuit(gpioRelay,relayVentVer, relayVentVerName, pinStateOn);
@@ -487,6 +504,26 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonOff.setSelected(false);
         jToggleButtonManual.setSelected(false);
         jToggleButtonInverno.setSelected(false);
+        
+        
+        
+        // create gpio controller
+        final GpioController gpio = GpioFactory.getInstance();
+        // provision gpio pin as an output pin and turn on
+        final GpioPinDigitalOutput output = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "My Output", PinState.HIGH);
+  
+            
+        
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        output.toggle();
+        
+        
+        
     }//GEN-LAST:event_jToggleButtonVeraoActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
