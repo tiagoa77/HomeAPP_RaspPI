@@ -40,7 +40,10 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final Pin relayValvulaB = RaspiPin.GPIO_03;
     private static final String relayValvulaBName = "Relay Valvula B";
     
-    final GpioController gpioRelay = GpioFactory.getInstance();
+    final GpioController gpio = GpioFactory.getInstance();
+    // provision gpio pin as an output pin and turn on
+    final GpioPinDigitalOutput output = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "My Output", PinState.HIGH);
+
 
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
@@ -420,9 +423,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         
         
         // create gpio controller
-        final GpioController gpio = GpioFactory.getInstance();
-        // provision gpio pin as an output pin and turn on
-        final GpioPinDigitalOutput output = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "My Output", PinState.HIGH);
+        gpio.high();
   
             
         
@@ -463,30 +464,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
 
-        Thread relay = new Thread() {
-            public void run() {
-                
-                
-                
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayVentInv, relayVentInvName, pinStateOff);
-                //Relay Verão Desligado
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayVentVer, relayVentVerName, pinStateOn);
-                //Valvula A a OFF
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaA, relayValvulaAName, pinStateOn);
-                //Abrir a valvula B e esperar durante X segundos para poder desligar
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOff);
-                try {
-                    sleep(8);
-
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOn);
-            }
-
-        };
-
-        relay.start();
+        
 
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
@@ -507,20 +485,12 @@ public final class HomeFrame extends javax.swing.JFrame {
         
         
         
-        // create gpio controller
-        final GpioController gpio = GpioFactory.getInstance();
-        // provision gpio pin as an output pin and turn on
-        final GpioPinDigitalOutput output = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "My Output", PinState.HIGH);
-  
+        
             
         
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        output.toggle();
+    
+
+         gpio.low();
         
         
         
