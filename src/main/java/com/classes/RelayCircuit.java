@@ -21,11 +21,7 @@ public class RelayCircuit {
     
     
     public static void controlRelayCircuit(Pin pinCode ,String pinName, PinState pinState ){
-		
-                System.out.println("Starting Relay Circuit Example..."); 
-		
-               
-                
+                 
 		//This is required to enable Non Privileged Access to avoid applying sudo to run Pi4j programs
 		GpioUtil.enableNonPrivilegedAccess();
 		
@@ -33,10 +29,10 @@ public class RelayCircuit {
                 
 		//Create gpio controller for LED listening on the pin GPIO_00 with default PinState as LOW                    
 		final GpioController gpioRelay = GpioFactory.getInstance();
-                
-                GpioUtil.export(0, GpioUtil.DIRECTION_OUT);
-                
-                GpioPinDigitalOutput relayLED1 = gpioRelay.provisionDigitalOutputPin(pinCode, pinName, pinState);
+               
+               
+                GpioPinDigitalOutput relayLED = gpioRelay.provisionDigitalOutputPin(pinCode, pinName, pinState);
+                relayLED.high();
 	}
 	
 	/**
