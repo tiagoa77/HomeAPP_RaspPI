@@ -20,7 +20,7 @@ import com.pi4j.wiringpi.GpioUtil;
 public class RelayCircuit {
     
     
-    public static void controlRelayCircuit(Pin pinCode ,String pinName, PinState pinState ){
+    public static void controlRelayCircuit(GpioController gpioRelay,Pin pinCode ,String pinName, PinState pinState ){
                  
 		//This is required to enable Non Privileged Access to avoid applying sudo to run Pi4j programs
 		GpioUtil.enableNonPrivilegedAccess();
@@ -28,7 +28,7 @@ public class RelayCircuit {
                 //LOW-->OFF,HIGH-->ON
                 
 		//Create gpio controller for LED listening on the pin GPIO_00 with default PinState as LOW                    
-		final GpioController gpioRelay = GpioFactory.getInstance();
+		
                
                
                 GpioPinDigitalOutput relayLED = gpioRelay.provisionDigitalOutputPin(pinCode, pinName, pinState);

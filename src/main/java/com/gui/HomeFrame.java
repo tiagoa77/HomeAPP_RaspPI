@@ -38,6 +38,8 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relayValvulaAName = "Relay Valvula A";
     private static final Pin relayValvulaB = RaspiPin.GPIO_03;
     private static final String relayValvulaBName = "Relay Valvula B";
+    
+    final GpioController gpioRelay = GpioFactory.getInstance();
 
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
@@ -417,20 +419,20 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         Thread relay = new Thread() {
             public void run() {
-                RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayVentInv, relayVentInvName, pinStateOn);
                 //Relay Verão Desligado
-                RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayVentVer, relayVentVerName, pinStateOff);
                 //Valvula A a OFF
-                RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaA, relayValvulaAName, pinStateOff);
                 //Abrir a valvula B e esperar durante X segundos para poder desligar
-                RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOn);
                 try {
                     sleep(8);
 
                 } catch (InterruptedException ex) {
                     Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOff);
             }
 
         };
@@ -449,20 +451,20 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         Thread relay = new Thread() {
             public void run() {
-                RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOff);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayVentInv, relayVentInvName, pinStateOff);
                 //Relay Verão Desligado
-                RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOn);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayVentVer, relayVentVerName, pinStateOn);
                 //Valvula A a OFF
-                RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOn);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaA, relayValvulaAName, pinStateOn);
                 //Abrir a valvula B e esperar durante X segundos para poder desligar
-                RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOff);
                 try {
                     sleep(8);
 
                 } catch (InterruptedException ex) {
                     Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
+                RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOn);
             }
 
         };
