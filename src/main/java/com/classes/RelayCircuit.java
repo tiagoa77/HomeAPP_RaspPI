@@ -32,7 +32,7 @@ public class RelayCircuit {
                
                
                 GpioPinDigitalOutput relayLED = gpioRelay.provisionDigitalOutputPin(pinCode, pinName, pinState);
-                relayLED.high();
+                
 	}
 	
 	/**

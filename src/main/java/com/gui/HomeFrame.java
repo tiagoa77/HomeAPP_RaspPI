@@ -417,27 +417,26 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         Thread relay = new Thread() {
             public void run() {
-               RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
+                RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
+                //Relay Verão Desligado
+                RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
+                //Valvula A a OFF
+                RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
+                //Abrir a valvula B e esperar durante X segundos para poder desligar
+                RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
+                try {
+                    sleep(8);
 
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
             }
 
         };
 
         relay.start();
 
-        //Relay Verão Desligado
-//        RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
-//        //Valvula A a OFF
-//        RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOff);
-//        //Abrir a valvula B e esperar durante X segundos para poder desligar
-//        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
-//        try {
-//            sleep(8);
-//
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
 
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
 
@@ -448,7 +447,27 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
 
-        RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOn);
+        Thread relay = new Thread() {
+            public void run() {
+                RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOff);
+                //Relay Verão Desligado
+                RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOn);
+                //Valvula A a OFF
+                RelayCircuit.controlRelayCircuit(relayValvulaA, relayValvulaAName, pinStateOn);
+                //Abrir a valvula B e esperar durante X segundos para poder desligar
+                RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
+                try {
+                    sleep(8);
+
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOn);
+            }
+
+        };
+
+        relay.start();
 
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
