@@ -30,7 +30,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     //definir varíaveis
     private static final PinState pinStateOn = PinState.HIGH;
     private static final PinState pinStateOff = PinState.LOW;
-    private static final Pin relayVentInv = RaspiPin.GPIO_17;
+    private static final Pin relayVentInv = RaspiPin.GPIO_00;
     private static final String relayVentInvName = "Relay Inverno";
     private static final Pin relayVentVer = RaspiPin.GPIO_01;
     private static final String relayVentVerName = "Relay Verão";
@@ -415,8 +415,16 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
 
-        //Relay Inverno Ligado
-        RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
+        Thread relay = new Thread() {
+            public void run() {
+               RelayCircuit.controlRelayCircuit(relayVentInv, relayVentInvName, pinStateOn);
+
+            }
+
+        };
+
+        relay.start();
+
         //Relay Verão Desligado
 //        RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOff);
 //        //Valvula A a OFF
@@ -431,7 +439,6 @@ public final class HomeFrame extends javax.swing.JFrame {
 //        }
 //        RelayCircuit.controlRelayCircuit(relayValvulaB, relayValvulaBName, pinStateOff);
 
-
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
 
     private void jToggleButtonManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonManualActionPerformed
@@ -442,6 +449,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonVerao.setSelected(false);
 
         RelayCircuit.controlRelayCircuit(relayVentVer, relayVentVerName, pinStateOn);
+
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
     private void jToggleButtonInvernoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonInvernoActionPerformed
