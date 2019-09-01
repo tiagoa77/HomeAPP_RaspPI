@@ -39,11 +39,13 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relayValvulaAName = "Relay Valvula A";
     private static final Pin relayValvulaB = RaspiPin.GPIO_03;
     private static final String relayValvulaBName = "Relay Valvula B";
-    
+
     final GpioController gpio = GpioFactory.getInstance();
     // provision gpio pin as an output pin and turn on
-    final GpioPinDigitalOutput output = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "My Output", PinState.HIGH);
-
+    final GpioPinDigitalOutput relay1 = gpio.provisionDigitalOutputPin(relayVentInv, relayVentInvName, pinStateOff);
+    final GpioPinDigitalOutput relay2 = gpio.provisionDigitalOutputPin(relayVentVer, relayVentVerName, pinStateOff);
+    final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOff);
+    final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOff);
 
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
@@ -420,41 +422,22 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonManual.setSelected(false);
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
-        
-        
-        // create gpio controller
-        output.high();
-  
-            
-        
+
+        //Relay Inverno Desligado
+        relay1.high();
+        //Relay Verão Desligado
+        relay2.low();
+        //Valvula A a OFF
+        relay3.low();
+        //Abrir a valvula B e esperar durante X segundos para poder desligar
+        relay4.high();
         try {
-            Thread.sleep(5000);
+            sleep(8);
+
         } catch (InterruptedException ex) {
             Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        output.toggle();
-        
-//        RelayCircuit.controlRelayCircuit(gpioRelay,relayVentInv, relayVentInvName, pinStateOn);
-//        
-//        
-//        //Relay Verão Desligado
-//        RelayCircuit.controlRelayCircuit(gpioRelay,relayVentVer, relayVentVerName, pinStateOff);
-//        //Valvula A a OFF
-//        RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaA, relayValvulaAName, pinStateOff);
-//        //Abrir a valvula B e esperar durante X segundos para poder desligar
-//        RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOn);
-//        try {
-//            sleep(8);
-//
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        RelayCircuit.controlRelayCircuit(gpioRelay,relayValvulaB, relayValvulaBName, pinStateOff);
-//            
-
-        
-
+        relay4.low();
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
 
     private void jToggleButtonManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonManualActionPerformed
@@ -463,9 +446,16 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonOff.setSelected(false);
         jToggleButtonInverno.setSelected(false);
         jToggleButtonVerao.setSelected(false);
-
         
-
+        //Relay Inverno Desligado
+        relay1.high();
+        //Relay Verão Desligado
+        relay2.low();
+        //Valvula A a OFF
+        relay3.low();
+        //Valvula B a OFF
+        relay4.low();
+        
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
     private void jToggleButtonInvernoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonInvernoActionPerformed
@@ -482,18 +472,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonOff.setSelected(false);
         jToggleButtonManual.setSelected(false);
         jToggleButtonInverno.setSelected(false);
-        
-        
-        
-        
-            
-        
-    
 
-         output.low();
-        
-        
-        
+
+
     }//GEN-LAST:event_jToggleButtonVeraoActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
