@@ -433,12 +433,13 @@ public final class HomeFrame extends javax.swing.JFrame {
             //Abrir a valvula B e esperar durante X segundos para poder desligar
             relay4.high();
 
-            sleep(8);
-
+            sleep(8000);
+            
+            relay4.low();
         } catch (InterruptedException ex) {
             Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        relay4.low();
+       
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
 
     private void jToggleButtonManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonManualActionPerformed
