@@ -417,6 +417,9 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     private void jToggleButtonOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonOffActionPerformed
         // ButtonActions
+        
+        if(jToggleButtonOff.isSelected()){
+        
         Thread buttonOff = new Thread() {
             public void run() {
                 try {
@@ -434,13 +437,11 @@ public final class HomeFrame extends javax.swing.JFrame {
                         //Abrir a valvula B e esperar durante X segundos para poder desligar
                         relay4.high();
                         
-                        WaitingRelay a = new WaitingRelay(HomeFrame.this, true);
-                        HomeFrame.this.setFocusable(false);
-                        sleep(8000);
+                        wait(8000);
+                        //sleep(8000);
                         
-                        a.setVisible(false);
-                        HomeFrame.this.setFocusable(true);
                         relay4.low();
+                        
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -448,7 +449,11 @@ public final class HomeFrame extends javax.swing.JFrame {
         };
         buttonOff.start();
     
-        
+        }
+        else
+        {
+            jToggleButtonOff.setEnabled(true);
+        }
 //        try {
 //            jToggleButtonManual.setSelected(false);
 //            jToggleButtonInverno.setSelected(false);
