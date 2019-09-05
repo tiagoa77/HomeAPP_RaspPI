@@ -15,8 +15,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import com.classes.Funcoes;
 import com.pi4j.io.gpio.*;
-import com.pi4j.io.gpio.impl.GpioControllerImpl;
-import java.awt.event.ActionEvent;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
 
@@ -42,7 +40,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relayValvulaBName = "Relay Valvula B";
 
     final GpioController gpio = GpioFactory.getInstance();
-    // provision gpio pin as an output pin and turn on
+    //provision gpio pin as an output pin and turn on
     final GpioPinDigitalOutput relay1 = gpio.provisionDigitalOutputPin(relayVentInv, relayVentInvName, pinStateOff);
     final GpioPinDigitalOutput relay2 = gpio.provisionDigitalOutputPin(relayVentVer, relayVentVerName, pinStateOff);
     final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOff);
@@ -419,27 +417,55 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     private void jToggleButtonOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonOffActionPerformed
         // ButtonActions
-        try {
-            jToggleButtonManual.setSelected(false);
-            jToggleButtonInverno.setSelected(false);
-            jToggleButtonVerao.setSelected(false);
+        Thread buttonOff = new Thread() {
+            public void run() {
+                try {
+                    
+                        jToggleButtonManual.setSelected(false);
+                        jToggleButtonInverno.setSelected(false);
+                        jToggleButtonVerao.setSelected(false);
 
-            //Relay Inverno Desligado
-            relay1.high();
-            //Relay Verão Desligado
-            relay2.low();
-            //Valvula A a OFF
-            relay3.low();
-            //Abrir a valvula B e esperar durante X segundos para poder desligar
-            relay4.high();
+                        //Relay Inverno Desligado
+                        relay1.high();
+                        //Relay Verão Desligado
+                        relay2.low();
+                        //Valvula A a OFF
+                        relay3.low();
+                        //Abrir a valvula B e esperar durante X segundos para poder desligar
+                        relay4.high();
 
-            sleep(8000);
-            
-            relay4.low();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+                        sleep(8000);
+
+                        relay4.low();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        buttonOff.start();
+    
+        
+//        try {
+//            jToggleButtonManual.setSelected(false);
+//            jToggleButtonInverno.setSelected(false);
+//            jToggleButtonVerao.setSelected(false);
+//
+//            //Relay Inverno Desligado
+//            relay1.high();
+//            //Relay Verão Desligado
+//            relay2.low();
+//            //Valvula A a OFF
+//            relay3.low();
+//            //Abrir a valvula B e esperar durante X segundos para poder desligar
+//            relay4.high();
+//
+//            sleep(8000);
+//            
+//            relay4.low();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//       
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
 
     private void jToggleButtonManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonManualActionPerformed
