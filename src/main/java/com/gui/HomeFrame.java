@@ -416,14 +416,14 @@ public final class HomeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButtonOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonOffActionPerformed
-        // ButtonActions
-        
-        if(jToggleButtonOff.isSelected()){
-        
-        Thread buttonOff = new Thread() {
-            public void run() {
-                try {
-                    
+        // ButtonActions Off
+
+        if (jToggleButtonOff.isSelected()) {
+
+            Thread buttonOff = new Thread() {
+                public void run() {
+                    try {
+
                         jToggleButtonManual.setSelected(false);
                         jToggleButtonInverno.setSelected(false);
                         jToggleButtonVerao.setSelected(false);
@@ -436,80 +436,73 @@ public final class HomeFrame extends javax.swing.JFrame {
                         relay3.low();
                         //Abrir a valvula B e esperar durante X segundos para poder desligar
                         relay4.high();
-                        
-                        wait(8000);
-                        //sleep(8000);
-                        
+
+                        Thread.sleep(8000);
+
                         relay4.low();
-                        
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-        };
-        buttonOff.start();
-    
+            };
+            buttonOff.start();
+
+        } else {
+            jToggleButtonOff.setSelected(true);
         }
-        else
-        {
-            jToggleButtonOff.setEnabled(true);
-        }
-//        try {
-//            jToggleButtonManual.setSelected(false);
-//            jToggleButtonInverno.setSelected(false);
-//            jToggleButtonVerao.setSelected(false);
-//
-//            //Relay Inverno Desligado
-//            relay1.high();
-//            //Relay Verão Desligado
-//            relay2.low();
-//            //Valvula A a OFF
-//            relay3.low();
-//            //Abrir a valvula B e esperar durante X segundos para poder desligar
-//            relay4.high();
-//
-//            sleep(8000);
-//            
-//            relay4.low();
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//       
     }//GEN-LAST:event_jToggleButtonOffActionPerformed
 
     private void jToggleButtonManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonManualActionPerformed
-        // ButtonActions
+        // ButtonActions Manual
 
-        jToggleButtonOff.setSelected(false);
-        jToggleButtonInverno.setSelected(false);
-        jToggleButtonVerao.setSelected(false);
+        if (jToggleButtonManual.isSelected()) {
 
-        //Relay Inverno Desligado
-        relay1.low();
-        //Relay Verão Desligado
-        relay2.high();
-        //Valvula A a OFF
-        relay3.low();
-        //Valvula B a OFF
-        relay4.low();
+            jToggleButtonOff.setSelected(false);
+            jToggleButtonInverno.setSelected(false);
+            jToggleButtonVerao.setSelected(false);
+
+            //Relay Inverno Desligado
+            relay1.low();
+            //Relay Verão Desligado
+            relay2.high();
+            //Valvula A a OFF
+            relay3.low();
+            //Valvula B a OFF
+            relay4.low();
+
+        } else {
+            jToggleButtonManual.setSelected(true);
+        }
 
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
     private void jToggleButtonInvernoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonInvernoActionPerformed
-        // ButtonActions
+        // ButtonActions Inverno
 
-        jToggleButtonOff.setSelected(false);
-        jToggleButtonManual.setSelected(false);
-        jToggleButtonVerao.setSelected(false);
+        if (jToggleButtonInverno.isSelected()) {
+
+            jToggleButtonOff.setSelected(false);
+            jToggleButtonManual.setSelected(false);
+            jToggleButtonVerao.setSelected(false);
+
+        } else {
+            jToggleButtonInverno.setSelected(true);
+        }
     }//GEN-LAST:event_jToggleButtonInvernoActionPerformed
 
     private void jToggleButtonVeraoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonVeraoActionPerformed
-        // ButtonActions
+        // ButtonActions Verao
 
-        jToggleButtonOff.setSelected(false);
-        jToggleButtonManual.setSelected(false);
-        jToggleButtonInverno.setSelected(false);
+        if (jToggleButtonInverno.isSelected()) {
 
+            jToggleButtonOff.setSelected(false);
+            jToggleButtonManual.setSelected(false);
+            jToggleButtonInverno.setSelected(false);
+
+        } else {
+            jToggleButtonVerao.setSelected(true);
+        }
 
     }//GEN-LAST:event_jToggleButtonVeraoActionPerformed
 
