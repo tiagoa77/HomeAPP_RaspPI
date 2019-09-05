@@ -433,9 +433,13 @@ public final class HomeFrame extends javax.swing.JFrame {
                         relay3.low();
                         //Abrir a valvula B e esperar durante X segundos para poder desligar
                         relay4.high();
-
+                        
+                        WaitingRelay a = new WaitingRelay(HomeFrame.this, true);
+                        HomeFrame.this.setFocusable(false);
                         sleep(8000);
-
+                        
+                        a.setVisible(false);
+                        HomeFrame.this.setFocusable(true);
                         relay4.low();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
