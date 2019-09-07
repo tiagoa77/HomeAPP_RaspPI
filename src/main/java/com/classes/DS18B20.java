@@ -12,6 +12,7 @@ package com.classes;
 import com.pi4j.component.temperature.TemperatureSensor;
 import com.pi4j.io.w1.W1Master;
 import com.pi4j.temperature.TemperatureScale;
+import org.apache.commons.math3.util.Precision;
 
 /**
  *
@@ -32,13 +33,13 @@ public class DS18B20 {
     return 0;
   }
     
-  public static double getSensorsTemperatureAdjust(String deviceName, Integer percent){
+  public static double getSensorsTemperatureAdjust(String deviceName, Double valor){
         
       Double sensorTemp, newSensorTemp;
       
       sensorTemp = getSensorsTemperature(deviceName);
-      newSensorTemp = sensorTemp*percent;
+      newSensorTemp = sensorTemp+valor;
       
-    return newSensorTemp;
+    return Precision.round(newSensorTemp,1);
   }  
 }

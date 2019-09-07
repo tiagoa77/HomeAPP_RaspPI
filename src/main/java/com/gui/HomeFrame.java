@@ -61,9 +61,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
 
         getTempHumidade(2000);
-        wiredSensorTemps("28-020192453134", 1, 2000, "ARNOVO");
-        wiredSensorTemps("28-03129779f399", 1, 2000, "ARINSUFLACAO");
-        wiredSensorTemps("28-031597793897", 1, 2000, "RETORNO");
+        wiredSensorTemps("28-020192453134", 0.0, 2000, "ARNOVO");
+        wiredSensorTemps("28-03129779f399", 2.7, 2000, "ARINSUFLACAO");
+        wiredSensorTemps("28-031597793897", 2.0, 2000, "RETORNO");
 
     }
 
@@ -160,7 +160,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         tempHum.start();
     }
 
-    public void wiredSensorTemps(String wiredDevices, Integer percentMult, Integer sleepTimeMilis, String option) {
+    public void wiredSensorTemps(String wiredDevices, Double valor, Integer sleepTimeMilis, String option) {
 
         Thread wiredSensorTemps = new Thread() {
             public void run() {
@@ -170,7 +170,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                 while (true) {
                     try {
 
-                        temp = DS18B20.getSensorsTemperatureAdjust(wiredDevices, percentMult);
+                        temp = DS18B20.getSensorsTemperatureAdjust(wiredDevices, valor);
                         if (option.equals("ARNOVO")) {
                             jLabelArNovoValor.setText(Double.toString(temp) + " ºC");
                         } else if (option.equals("ARINSUFLACAO")) {
