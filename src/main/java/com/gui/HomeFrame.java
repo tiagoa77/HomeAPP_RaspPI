@@ -38,6 +38,8 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relayValvulaAName = "Relay Valvula A";
     private static final Pin relayValvulaB = RaspiPin.GPIO_03;
     private static final String relayValvulaBName = "Relay Valvula B";
+    private static Integer temperaturaDefinida = 20;
+    public volatile HashMap<String, Float> tempHumid;
 
     final GpioController gpio = GpioFactory.getInstance();
     //provision gpio pin as an output pin and turn on
@@ -51,9 +53,12 @@ public final class HomeFrame extends javax.swing.JFrame {
         this.sistema = s;
         initComponents();
         clock();
+        temporario();
 
         //Não está a efetuar ações -> deveria ser na main
         jToggleButtonOff.setSelected(true);
+
+        jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
 
         getTempHumidade(2000);
         wiredSensorTemps("28-020192453134", 1, 2000, "ARNOVO");
@@ -91,6 +96,45 @@ public final class HomeFrame extends javax.swing.JFrame {
         clock.start();
     }
 
+    public void temporario() {
+
+        Thread temporario = new Thread() {
+            public void run() {
+                try {
+                    while (true) {
+                        System.err.println("Temperatura: " + Integer.toString(temperaturaDefinida));
+                        sleep(3000);
+                        System.err.println("Numero de threads ativas: " + Thread.activeCount());
+                        System.err.println(Float.toString(tempHumid.get("Temperatura")) + " ºC");
+                    }
+
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        temporario.start();
+    }
+
+    public void modoInverno() {
+
+        Thread modoInverno = new Thread() {
+            public void run() {
+                try {
+                    while (true) {
+                        System.err.println("Temperatura: " + Integer.toString(temperaturaDefinida));
+                        sleep(4000);
+                        System.err.println("Numero de threads ativas: " + Thread.activeCount());
+                    }
+
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        modoInverno.start();
+    }
+
     public void getTempHumidade(Integer sleepTime) {
 
         Thread tempHum = new Thread() {
@@ -99,12 +143,13 @@ public final class HomeFrame extends javax.swing.JFrame {
                     final DHT11 dht = new DHT11();
 
                     while (true) {
-                        HashMap<String, Float> tempHum;
-                        tempHum = dht.getTemperature(29);
+
+                        tempHumid = dht.getTemperature(29);
                         //0 - Temp // 1 - Humidade
-                        jLabelAmbienteValor.setText(Float.toString(tempHum.get("Temperatura")) + " ºC");
-                        jLabelHumidadeValor.setText(Float.toString(tempHum.get("Humidade")) + " %");
+                        jLabelAmbienteValor.setText(Float.toString(tempHumid.get("Temperatura")) + " ºC");
+                        jLabelHumidadeValor.setText(Float.toString(tempHumid.get("Humidade")) + " %");
                         sleep(sleepTime);
+
                     }
 
                 } catch (InterruptedException ex) {
@@ -119,13 +164,13 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         Thread wiredSensorTemps = new Thread() {
             public void run() {
-                DS18B20 a = new DS18B20();
-                Double temp = 0.0;
+
+                Double temp;
 
                 while (true) {
                     try {
 
-                        temp = a.getSensorsTemperatureAdjust(wiredDevices, percentMult);
+                        temp = DS18B20.getSensorsTemperatureAdjust(wiredDevices, percentMult);
                         if (option.equals("ARNOVO")) {
                             jLabelArNovoValor.setText(Double.toString(temp) + " ºC");
                         } else if (option.equals("ARINSUFLACAO")) {
@@ -147,6 +192,25 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         wiredSensorTemps.start();
 
+    }
+
+    ;
+    
+    public void incrementarTemp(String operacao) {
+
+        Thread incrementarTemp = new Thread() {
+            public void run() {
+
+                if (operacao.equals("+")) {
+                    temperaturaDefinida++;
+                } else {
+                    temperaturaDefinida--;
+
+                }
+                jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
+            }
+        };
+        incrementarTemp.start();
     }
 
     ;
@@ -179,6 +243,10 @@ public final class HomeFrame extends javax.swing.JFrame {
         jLabelHumidadeValor = new javax.swing.JLabel();
         jLabelRetorno = new javax.swing.JLabel();
         jLabelRetornoValor = new javax.swing.JLabel();
+        jLabelDefineTemp = new javax.swing.JLabel();
+        jButtonAumentaTemp = new javax.swing.JButton();
+        jLabelTemperaturaDefinida = new javax.swing.JLabel();
+        jButtonDiminuiTemp = new javax.swing.JButton();
         jPanelPorteiro = new javax.swing.JPanel();
         jLabelDataHora = new javax.swing.JLabel();
         jLabelClock = new javax.swing.JLabel();
@@ -263,6 +331,28 @@ public final class HomeFrame extends javax.swing.JFrame {
         jLabelRetornoValor.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabelRetornoValor.setText("N/A");
 
+        jLabelDefineTemp.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabelDefineTemp.setText("Controlo Temp");
+
+        jButtonAumentaTemp.setText("+");
+        jButtonAumentaTemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAumentaTempActionPerformed(evt);
+            }
+        });
+
+        jLabelTemperaturaDefinida.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabelTemperaturaDefinida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTemperaturaDefinida.setText("20 ºC");
+        jLabelTemperaturaDefinida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jButtonDiminuiTemp.setText("-");
+        jButtonDiminuiTemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDiminuiTempActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelControloTempLayout = new javax.swing.GroupLayout(jPanelControloTemp);
         jPanelControloTemp.setLayout(jPanelControloTempLayout);
         jPanelControloTempLayout.setHorizontalGroup(
@@ -270,30 +360,44 @@ public final class HomeFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelControloTempLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelAmbienteValor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelArNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelArNovoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabelHumidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelArInsuflacao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelControloTempLayout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelArInsuflacaoValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelHumidadeValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(jLabelControl, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelRetornoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelControloTempLayout.createSequentialGroup()
+                            .addGap(12, 12, 12)
+                            .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabelAmbienteValor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelArNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelArNovoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelControloTempLayout.createSequentialGroup()
+                                    .addGap(29, 29, 29)
+                                    .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabelHumidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelArInsuflacao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelControloTempLayout.createSequentialGroup()
+                                    .addGap(41, 41, 41)
+                                    .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabelArInsuflacaoValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabelHumidadeValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(jPanelControloTempLayout.createSequentialGroup()
+                            .addGap(9, 9, 9)
+                            .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabelRetornoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelControloTempLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelDefineTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanelControloTempLayout.createSequentialGroup()
+                                    .addGap(40, 40, 40)
+                                    .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabelTemperaturaDefinida, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanelControloTempLayout.createSequentialGroup()
+                                            .addComponent(jButtonDiminuiTemp)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jButtonAumentaTemp)))
+                                    .addGap(0, 0, Short.MAX_VALUE))))))
                 .addGap(43, 43, Short.MAX_VALUE)
                 .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToggleButtonVerao, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -333,16 +437,23 @@ public final class HomeFrame extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(jToggleButtonManual, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)))
-                .addGap(24, 24, 24)
-                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                        .addComponent(jLabelRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelRetornoValor))
-                    .addComponent(jToggleButtonInverno, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jToggleButtonVerao, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelControloTempLayout.createSequentialGroup()
+                        .addComponent(jToggleButtonInverno, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jToggleButtonVerao, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelControloTempLayout.createSequentialGroup()
+                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelDefineTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelRetornoValor)
+                            .addComponent(jLabelTemperaturaDefinida))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonDiminuiTemp)
+                            .addComponent(jButtonAumentaTemp)))))
         );
 
         Tabs.addTab("Controlador", jPanelControloTemp);
@@ -504,6 +615,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             jToggleButtonVerao.setSelected(true);
         }
 
+
     }//GEN-LAST:event_jToggleButtonVeraoActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -511,6 +623,17 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         System.exit(0);
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonAumentaTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAumentaTempActionPerformed
+        // TODO add your handling code here:
+        incrementarTemp("+");
+    }//GEN-LAST:event_jButtonAumentaTempActionPerformed
+
+    private void jButtonDiminuiTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDiminuiTempActionPerformed
+        // TODO add your handling code here:
+        incrementarTemp("-");
+
+    }//GEN-LAST:event_jButtonDiminuiTempActionPerformed
 
     /**
      * @param args the command line arguments
@@ -550,7 +673,9 @@ public final class HomeFrame extends javax.swing.JFrame {
                 Sistema s = new Sistema();
 
                 try {
+
                     new HomeFrame(s).setVisible(true);
+
                 } catch (InterruptedException ex) {
                     Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -565,6 +690,8 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane Tabs;
+    private javax.swing.JButton jButtonAumentaTemp;
+    private javax.swing.JButton jButtonDiminuiTemp;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabelAmbiente;
     private javax.swing.JLabel jLabelAmbienteValor;
@@ -575,12 +702,14 @@ public final class HomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelClock;
     private javax.swing.JLabel jLabelControl;
     private javax.swing.JLabel jLabelDataHora;
+    private javax.swing.JLabel jLabelDefineTemp;
     private javax.swing.JLabel jLabelHumidade;
     private javax.swing.JLabel jLabelHumidadeValor;
     private javax.swing.JLabel jLabelMoradiaAugusto;
     private javax.swing.JLabel jLabelRetorno;
     private javax.swing.JLabel jLabelRetornoValor;
     private javax.swing.JLabel jLabelTemperatura;
+    private javax.swing.JLabel jLabelTemperaturaDefinida;
     private javax.swing.JPanel jPanelControloTemp;
     private javax.swing.JPanel jPanelPorteiro;
     private javax.swing.JToggleButton jToggleButtonInverno;
