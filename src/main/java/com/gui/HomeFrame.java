@@ -62,8 +62,8 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         getTempHumidade(2000);
         wiredSensorTemps("28-020192453134", 0.0, 2000, "ARNOVO");
-        wiredSensorTemps("28-03129779f399", 6.7, 2000, "ARINSUFLACAO");
-        wiredSensorTemps("28-031597793897", 8.0, 2000, "RETORNO");
+        wiredSensorTemps("28-03129779f399", 2.7, 2000, "ARINSUFLACAO");
+        wiredSensorTemps("28-031597793897", 2.0, 2000, "RETORNO");
 
     }
 
