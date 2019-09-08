@@ -17,6 +17,7 @@ import com.classes.Funcoes;
 import com.pi4j.io.gpio.*;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
+import javax.swing.JFrame;
 
 /**
  *
@@ -53,7 +54,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         this.sistema = s;
         initComponents();
         clock();
-        temporario();
+        //temporario();
 
         //Não está a efetuar ações -> deveria ser na main
         jToggleButtonOff.setSelected(true);
@@ -62,8 +63,8 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         getTempHumidade(2000);
         wiredSensorTemps("28-020192453134", 0.0, 2000, "ARNOVO");
-        wiredSensorTemps("28-03129779f399", 2.7, 2000, "ARINSUFLACAO");
-        wiredSensorTemps("28-031597793897", 2.0, 2000, "RETORNO");
+        wiredSensorTemps("28-03129779f399", 2.6, 2000, "ARINSUFLACAO");
+        wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
 
     }
 
@@ -256,7 +257,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("JFrameHome"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(800, 480));
         setResizable(false);
+        setSize(new java.awt.Dimension(800, 480));
 
         Tabs.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
@@ -675,6 +678,8 @@ public final class HomeFrame extends javax.swing.JFrame {
                 try {
 
                     new HomeFrame(s).setVisible(true);
+                   
+                    
 
                 } catch (InterruptedException ex) {
                     Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
