@@ -144,8 +144,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 System.out.println(modInvernoTempAmbiente + " <= " + temperaturaDefinida);
                                 System.out.println("Está o inverno ativo");
                                 
-                                //ativar
-                                flagInvernoLigar=true;
+                               
                                 
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
@@ -161,6 +160,9 @@ public final class HomeFrame extends javax.swing.JFrame {
                                     //Valvula B a OFF
                                     relay4.low();
                                     }
+                                //ativar
+                                flagInvernoLigar=true;
+                                
                             }
                             else {
                                 System.out.println("Nao abrir relays de Inverno");
