@@ -45,6 +45,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     public volatile Integer temperaturaDefinida;
     public volatile Integer temperaturaAmbiente;
     public volatile Float modInvernoTempAmbiente;
+    public volatile boolean flagInvernoLigar;
     
         
     final GpioController gpio = GpioFactory.getInstance();
@@ -132,6 +133,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     modInvernoTempAmbiente = 0.0f;
+                    flagInvernoLigar = false;
                     while (true) {
                         
                         //Se o botão estiver selecionado
@@ -142,31 +144,38 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 System.out.println(modInvernoTempAmbiente + " <= " + temperaturaDefinida);
                                 System.out.println("Está o inverno ativo");
                                 
-                                //Relay Inverno Desligado
-                                relay1.low();
-                                //Relay Verão Desligado
-                                relay2.low();
-                                //Abrir a valvula A e esperar durante X segundos para poder desligar
-                                relay3.high();
-                                Thread.sleep(8000);
-                                relay3.low();
-                                //Valvula B a OFF
-                                relay4.low();
+                                //ativar
+                                flagInvernoLigar=true;
                                 
+                                //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
+                                //FALTA FAZER CONDIÇAO da diferença de 1 grau
+                                if(!flagInvernoLigar){
+                                    //Relay Inverno Desligado
+                                    relay1.low();
+                                    //Relay Verão Desligado
+                                    relay2.low();
+                                    //Abrir a valvula A e esperar durante X segundos para poder desligar
+                                    relay3.high();
+                                    Thread.sleep(8000);
+                                    relay3.low();
+                                    //Valvula B a OFF
+                                    relay4.low();
+                                    }
                             }
                             else {
                                 System.out.println("Nao abrir relays de Inverno");
                                 
-                                //Relay Inverno Ligado
-                                relay1.high();
-                                //Relay Verão Desligado
-                                relay2.low();
-                                //Valvula A OFF
-                                relay3.high();
-                                //Abrir a valvula B e esperar durante X segundos para poder desligar
-                                relay4.high();
-                                Thread.sleep(8000);
-                                relay4.low();
+                                flagInvernoLigar=false;
+//                                //Relay Inverno Ligado
+//                                relay1.high();
+//                                //Relay Verão Desligado
+//                                relay2.low();
+//                                //Valvula A OFF
+//                                relay3.high();
+//                                //Abrir a valvula B e esperar durante X segundos para poder desligar
+//                                relay4.high();
+//                                Thread.sleep(8000);
+//                                relay4.low();
                             }
                             
                         }
