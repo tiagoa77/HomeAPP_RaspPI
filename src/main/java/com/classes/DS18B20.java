@@ -38,8 +38,10 @@ public class DS18B20 {
       Double sensorTemp, newSensorTemp;
       
       sensorTemp = getSensorsTemperature(deviceName);
-      newSensorTemp = sensorTemp+valor;
-      
+      if(!sensorTemp.equals(0.0))
+        newSensorTemp = sensorTemp+valor;
+      else
+          newSensorTemp=0.0;
     return Precision.round(newSensorTemp,1);
   }  
 }
