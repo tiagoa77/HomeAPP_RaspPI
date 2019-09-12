@@ -17,7 +17,6 @@ import com.classes.Funcoes;
 import com.pi4j.io.gpio.*;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
-import javax.swing.JFrame;
 
 /**
  *
@@ -226,45 +225,200 @@ public final class HomeFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Tabs = new javax.swing.JTabbedPane();
-        jPanelControloTemp = new javax.swing.JPanel();
-        jToggleButtonManual = new javax.swing.JToggleButton();
-        jToggleButtonOff = new javax.swing.JToggleButton();
-        jToggleButtonVerao = new javax.swing.JToggleButton();
-        jToggleButtonInverno = new javax.swing.JToggleButton();
-        jLabelControl = new javax.swing.JLabel();
-        jLabelTemperatura = new javax.swing.JLabel();
-        jLabelArInsuflacao = new javax.swing.JLabel();
-        jLabelArNovo = new javax.swing.JLabel();
-        jLabelAmbiente = new javax.swing.JLabel();
+        jPanelMenu = new javax.swing.JPanel();
+        jLabelClock = new javax.swing.JLabel();
+        jLabelDataHora = new javax.swing.JLabel();
+        jPanelSensors = new javax.swing.JPanel();
         jLabelHumidade = new javax.swing.JLabel();
-        jLabelArNovoValor = new javax.swing.JLabel();
-        jLabelArInsuflacaoValor = new javax.swing.JLabel();
-        jLabelAmbienteValor = new javax.swing.JLabel();
         jLabelHumidadeValor = new javax.swing.JLabel();
+        jLabelArInsuflacao = new javax.swing.JLabel();
+        jLabelArInsuflacaoValor = new javax.swing.JLabel();
         jLabelRetorno = new javax.swing.JLabel();
         jLabelRetornoValor = new javax.swing.JLabel();
         jLabelDefineTemp = new javax.swing.JLabel();
         jButtonAumentaTemp = new javax.swing.JButton();
         jLabelTemperaturaDefinida = new javax.swing.JLabel();
         jButtonDiminuiTemp = new javax.swing.JButton();
-        jPanelPorteiro = new javax.swing.JPanel();
-        jLabelDataHora = new javax.swing.JLabel();
-        jLabelClock = new javax.swing.JLabel();
-        jLabelMoradiaAugusto = new javax.swing.JLabel();
+        jLabelArNovoValor = new javax.swing.JLabel();
+        jLabelArNovo = new javax.swing.JLabel();
+        jLabelAmbienteValor = new javax.swing.JLabel();
+        jLabelAmbiente = new javax.swing.JLabel();
+        jPanelControl = new javax.swing.JPanel();
+        jToggleButtonManual = new javax.swing.JToggleButton();
+        jToggleButtonOff = new javax.swing.JToggleButton();
+        jToggleButtonVerao = new javax.swing.JToggleButton();
+        jToggleButtonInverno = new javax.swing.JToggleButton();
         jButtonSair = new javax.swing.JButton();
+        jPanelPorteiro = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(800, 480));
+        setMinimumSize(new java.awt.Dimension(800, 480));
         setName("JFrameHome"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 480));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 480));
 
-        Tabs.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jPanelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Moradia Augusto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
 
-        jPanelControloTemp.setMaximumSize(new java.awt.Dimension(740, 550));
-        jPanelControloTemp.setPreferredSize(new java.awt.Dimension(740, 550));
+        jLabelClock.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelClock.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelClock.setText("Clock");
+
+        jLabelDataHora.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
+        jLabelDataHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelDataHora.setText("Data/Hora:");
+
+        javax.swing.GroupLayout jPanelMenuLayout = new javax.swing.GroupLayout(jPanelMenu);
+        jPanelMenu.setLayout(jPanelMenuLayout);
+        jPanelMenuLayout.setHorizontalGroup(
+            jPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMenuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelDataHora)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelClock)
+                .addGap(43, 43, 43))
+        );
+        jPanelMenuLayout.setVerticalGroup(
+            jPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabelClock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelDataHora))
+        );
+
+        jPanelSensors.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sensores", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14))); // NOI18N
+        jPanelSensors.setMaximumSize(new java.awt.Dimension(800, 480));
+        jPanelSensors.setPreferredSize(new java.awt.Dimension(800, 480));
+
+        jLabelHumidade.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelHumidade.setText("Humidade:");
+
+        jLabelHumidadeValor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabelHumidadeValor.setText("N/A");
+
+        jLabelArInsuflacao.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelArInsuflacao.setText("Ar Insuflação:");
+
+        jLabelArInsuflacaoValor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabelArInsuflacaoValor.setText("N/A");
+
+        jLabelRetorno.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelRetorno.setText("Retorno:");
+
+        jLabelRetornoValor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabelRetornoValor.setText("N/A");
+
+        jLabelDefineTemp.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelDefineTemp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelDefineTemp.setText("Temperatura definida:");
+
+        jButtonAumentaTemp.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButtonAumentaTemp.setText("+");
+        jButtonAumentaTemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAumentaTempActionPerformed(evt);
+            }
+        });
+
+        jLabelTemperaturaDefinida.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelTemperaturaDefinida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTemperaturaDefinida.setText("20 ºC");
+        jLabelTemperaturaDefinida.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabelTemperaturaDefinida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jButtonDiminuiTemp.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButtonDiminuiTemp.setText("-");
+        jButtonDiminuiTemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDiminuiTempActionPerformed(evt);
+            }
+        });
+
+        jLabelArNovoValor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabelArNovoValor.setText("N/A");
+
+        jLabelArNovo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelArNovo.setText("Ar Novo:");
+
+        jLabelAmbienteValor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabelAmbienteValor.setText("N/A");
+
+        jLabelAmbiente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabelAmbiente.setText("Ambiente:");
+
+        javax.swing.GroupLayout jPanelSensorsLayout = new javax.swing.GroupLayout(jPanelSensors);
+        jPanelSensors.setLayout(jPanelSensorsLayout);
+        jPanelSensorsLayout.setHorizontalGroup(
+            jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSensorsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelSensorsLayout.createSequentialGroup()
+                        .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelSensorsLayout.createSequentialGroup()
+                                .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelAmbienteValor, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabelArInsuflacao, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                                    .addComponent(jLabelHumidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelHumidadeValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelArInsuflacaoValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabelArNovoValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelArNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelRetorno, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                                .addComponent(jLabelRetornoValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSensorsLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabelDefineTemp, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(jLabelTemperaturaDefinida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelSensorsLayout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jButtonDiminuiTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonAumentaTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(58, 58, 58))))
+        );
+        jPanelSensorsLayout.setVerticalGroup(
+            jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSensorsLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelAmbiente)
+                    .addComponent(jLabelHumidade))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelHumidadeValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelAmbienteValor))
+                .addGap(25, 25, 25)
+                .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelArNovo)
+                    .addComponent(jLabelArInsuflacao, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelArNovoValor)
+                    .addComponent(jLabelArInsuflacaoValor))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelRetornoValor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelDefineTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelTemperaturaDefinida)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelSensorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonDiminuiTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAumentaTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jPanelControl.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Controlador", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
 
         jToggleButtonManual.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jToggleButtonManual.setText("Manual");
@@ -298,236 +452,136 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabelControl.setFont(new java.awt.Font("Dialog", 1, 22)); // NOI18N
-        jLabelControl.setText("Sensores Temperatura");
-
-        jLabelTemperatura.setFont(new java.awt.Font("Dialog", 1, 22)); // NOI18N
-        jLabelTemperatura.setText("Control");
-
-        jLabelArInsuflacao.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelArInsuflacao.setText("Ar Insuflação:");
-
-        jLabelArNovo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelArNovo.setText("Ar Novo:");
-
-        jLabelAmbiente.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelAmbiente.setText("Ambiente:");
-
-        jLabelHumidade.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelHumidade.setText("Humidade:");
-
-        jLabelArNovoValor.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelArNovoValor.setText("N/A");
-
-        jLabelArInsuflacaoValor.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelArInsuflacaoValor.setText("N/A");
-
-        jLabelAmbienteValor.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelAmbienteValor.setText("N/A");
-
-        jLabelHumidadeValor.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelHumidadeValor.setText("N/A");
-
-        jLabelRetorno.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelRetorno.setText("Retorno:");
-
-        jLabelRetornoValor.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelRetornoValor.setText("N/A");
-
-        jLabelDefineTemp.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelDefineTemp.setText("Controlo Temp");
-
-        jButtonAumentaTemp.setText("+");
-        jButtonAumentaTemp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAumentaTempActionPerformed(evt);
-            }
-        });
-
-        jLabelTemperaturaDefinida.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabelTemperaturaDefinida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTemperaturaDefinida.setText("20 ºC");
-        jLabelTemperaturaDefinida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jButtonDiminuiTemp.setText("-");
-        jButtonDiminuiTemp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDiminuiTempActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelControloTempLayout = new javax.swing.GroupLayout(jPanelControloTemp);
-        jPanelControloTemp.setLayout(jPanelControloTempLayout);
-        jPanelControloTempLayout.setHorizontalGroup(
-            jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelControloTempLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelControlLayout = new javax.swing.GroupLayout(jPanelControl);
+        jPanelControl.setLayout(jPanelControlLayout);
+        jPanelControlLayout.setHorizontalGroup(
+            jPanelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelControlLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToggleButtonVerao, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButtonManual, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButtonOff, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButtonInverno, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        jPanelControlLayout.setVerticalGroup(
+            jPanelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelControlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelControl, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelControloTempLayout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabelAmbienteValor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelArNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelArNovoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                                    .addGap(29, 29, 29)
-                                    .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabelHumidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabelArInsuflacao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelControloTempLayout.createSequentialGroup()
-                                    .addGap(41, 41, 41)
-                                    .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabelArInsuflacaoValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabelHumidadeValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                            .addGap(9, 9, 9)
-                            .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabelRetornoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelDefineTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                                    .addGap(40, 40, 40)
-                                    .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabelTemperaturaDefinida, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                                            .addComponent(jButtonDiminuiTemp)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jButtonAumentaTemp)))
-                                    .addGap(0, 0, Short.MAX_VALUE))))))
-                .addGap(43, 43, Short.MAX_VALUE)
-                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButtonVerao, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButtonOff, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButtonManual, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButtonInverno, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        jPanelControloTempLayout.setVerticalGroup(
-            jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTemperatura, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelControl, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jToggleButtonOff, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelHumidade)
-                            .addComponent(jLabelAmbiente))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelAmbienteValor)
-                            .addComponent(jLabelHumidadeValor))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelArNovo)
-                            .addComponent(jLabelArInsuflacao, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelArNovoValor)
-                            .addComponent(jLabelArInsuflacaoValor)))
-                    .addGroup(jPanelControloTempLayout.createSequentialGroup()
-                        .addComponent(jToggleButtonOff, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jToggleButtonManual, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)))
-                .addGap(26, 26, 26)
-                .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelControloTempLayout.createSequentialGroup()
-                        .addComponent(jToggleButtonInverno, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(jToggleButtonVerao, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelControloTempLayout.createSequentialGroup()
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelDefineTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelRetornoValor)
-                            .addComponent(jLabelTemperaturaDefinida))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelControloTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonDiminuiTemp)
-                            .addComponent(jButtonAumentaTemp)))))
+                .addComponent(jToggleButtonManual, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButtonInverno, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButtonVerao, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        Tabs.addTab("Controlador", jPanelControloTemp);
-
-        javax.swing.GroupLayout jPanelPorteiroLayout = new javax.swing.GroupLayout(jPanelPorteiro);
-        jPanelPorteiro.setLayout(jPanelPorteiroLayout);
-        jPanelPorteiroLayout.setHorizontalGroup(
-            jPanelPorteiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 662, Short.MAX_VALUE)
-        );
-        jPanelPorteiroLayout.setVerticalGroup(
-            jPanelPorteiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
-        );
-
-        Tabs.addTab("Porteiro", jPanelPorteiro);
-
-        jLabelDataHora.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        jLabelDataHora.setText("Data/Hora:");
-
-        jLabelClock.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabelClock.setText("Clock");
-
-        jLabelMoradiaAugusto.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabelMoradiaAugusto.setText("Moradia Augusto");
-
+        jButtonSair.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButtonSair.setText("Sair");
+        jButtonSair.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSairActionPerformed(evt);
             }
         });
 
+        jPanelPorteiro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Porteiro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+
+        javax.swing.GroupLayout jPanelPorteiroLayout = new javax.swing.GroupLayout(jPanelPorteiro);
+        jPanelPorteiro.setLayout(jPanelPorteiroLayout);
+        jPanelPorteiroLayout.setHorizontalGroup(
+            jPanelPorteiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 289, Short.MAX_VALUE)
+        );
+        jPanelPorteiroLayout.setVerticalGroup(
+            jPanelPorteiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelDataHora)
+                        .addComponent(jPanelSensors, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelClock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelMoradiaAugusto)
-                        .addGap(98, 98, 98)
-                        .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 667, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jPanelControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jPanelPorteiro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelMoradiaAugusto)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabelDataHora)
-                                .addComponent(jLabelClock))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanelSensors, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                    .addComponent(jPanelPorteiro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelControl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(58, 58, 58))
         );
-
-        Tabs.getAccessibleContext().setAccessibleName("Tabs");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
+        // TODO add your handling code here:
+
+        System.exit(0);
+    }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonDiminuiTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDiminuiTempActionPerformed
+        // TODO add your handling code here:
+        incrementarTemp("-");
+    }//GEN-LAST:event_jButtonDiminuiTempActionPerformed
+
+    private void jButtonAumentaTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAumentaTempActionPerformed
+        // TODO add your handling code here:
+        incrementarTemp("+");
+    }//GEN-LAST:event_jButtonAumentaTempActionPerformed
+
+    private void jToggleButtonInvernoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonInvernoActionPerformed
+        // ButtonActions Inverno
+
+        if (jToggleButtonInverno.isSelected()) {
+
+            jToggleButtonOff.setSelected(false);
+            jToggleButtonManual.setSelected(false);
+            jToggleButtonVerao.setSelected(false);
+
+        } else {
+            jToggleButtonInverno.setSelected(true);
+        }
+    }//GEN-LAST:event_jToggleButtonInvernoActionPerformed
+
+    private void jToggleButtonVeraoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonVeraoActionPerformed
+        // ButtonActions Verao
+
+        if (jToggleButtonInverno.isSelected()) {
+
+            jToggleButtonOff.setSelected(false);
+            jToggleButtonManual.setSelected(false);
+            jToggleButtonInverno.setSelected(false);
+
+        } else {
+            jToggleButtonVerao.setSelected(true);
+        }
+
+    }//GEN-LAST:event_jToggleButtonVeraoActionPerformed
 
     private void jToggleButtonOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonOffActionPerformed
         // ButtonActions Off
@@ -588,55 +642,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         } else {
             jToggleButtonManual.setSelected(true);
         }
-
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
-
-    private void jToggleButtonInvernoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonInvernoActionPerformed
-        // ButtonActions Inverno
-
-        if (jToggleButtonInverno.isSelected()) {
-
-            jToggleButtonOff.setSelected(false);
-            jToggleButtonManual.setSelected(false);
-            jToggleButtonVerao.setSelected(false);
-
-        } else {
-            jToggleButtonInverno.setSelected(true);
-        }
-    }//GEN-LAST:event_jToggleButtonInvernoActionPerformed
-
-    private void jToggleButtonVeraoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonVeraoActionPerformed
-        // ButtonActions Verao
-
-        if (jToggleButtonInverno.isSelected()) {
-
-            jToggleButtonOff.setSelected(false);
-            jToggleButtonManual.setSelected(false);
-            jToggleButtonInverno.setSelected(false);
-
-        } else {
-            jToggleButtonVerao.setSelected(true);
-        }
-
-
-    }//GEN-LAST:event_jToggleButtonVeraoActionPerformed
-
-    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
-        // TODO add your handling code here:
-
-        System.exit(0);
-    }//GEN-LAST:event_jButtonSairActionPerformed
-
-    private void jButtonAumentaTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAumentaTempActionPerformed
-        // TODO add your handling code here:
-        incrementarTemp("+");
-    }//GEN-LAST:event_jButtonAumentaTempActionPerformed
-
-    private void jButtonDiminuiTempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDiminuiTempActionPerformed
-        // TODO add your handling code here:
-        incrementarTemp("-");
-
-    }//GEN-LAST:event_jButtonDiminuiTempActionPerformed
 
     /**
      * @param args the command line arguments
@@ -694,7 +700,6 @@ public final class HomeFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane Tabs;
     private javax.swing.JButton jButtonAumentaTemp;
     private javax.swing.JButton jButtonDiminuiTemp;
     private javax.swing.JButton jButtonSair;
@@ -705,22 +710,26 @@ public final class HomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelArNovo;
     private javax.swing.JLabel jLabelArNovoValor;
     private javax.swing.JLabel jLabelClock;
-    private javax.swing.JLabel jLabelControl;
     private javax.swing.JLabel jLabelDataHora;
     private javax.swing.JLabel jLabelDefineTemp;
     private javax.swing.JLabel jLabelHumidade;
     private javax.swing.JLabel jLabelHumidadeValor;
-    private javax.swing.JLabel jLabelMoradiaAugusto;
     private javax.swing.JLabel jLabelRetorno;
     private javax.swing.JLabel jLabelRetornoValor;
-    private javax.swing.JLabel jLabelTemperatura;
     private javax.swing.JLabel jLabelTemperaturaDefinida;
-    private javax.swing.JPanel jPanelControloTemp;
+    private javax.swing.JPanel jPanelControl;
+    private javax.swing.JPanel jPanelControl1;
+    private javax.swing.JPanel jPanelMenu;
     private javax.swing.JPanel jPanelPorteiro;
+    private javax.swing.JPanel jPanelSensors;
     private javax.swing.JToggleButton jToggleButtonInverno;
+    private javax.swing.JToggleButton jToggleButtonInverno1;
     private javax.swing.JToggleButton jToggleButtonManual;
+    private javax.swing.JToggleButton jToggleButtonManual1;
     private javax.swing.JToggleButton jToggleButtonOff;
+    private javax.swing.JToggleButton jToggleButtonOff1;
     private javax.swing.JToggleButton jToggleButtonVerao;
+    private javax.swing.JToggleButton jToggleButtonVerao1;
     // End of variables declaration//GEN-END:variables
 
 }
