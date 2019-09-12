@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import com.classes.Funcoes;
 import com.pi4j.io.gpio.*;
-import java.awt.event.ActionListener;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
 
@@ -104,6 +103,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         wiredSensorTemps("28-03129779f399", 2.6, 2000, "ARINSUFLACAO");
         wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
         modoInverno();
+        modoVerao();
 
     }
 
