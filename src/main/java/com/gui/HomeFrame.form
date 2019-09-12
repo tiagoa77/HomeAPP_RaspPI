@@ -158,30 +158,21 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabelAmbiente" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
+                              <Component id="jLabelAmbienteValor" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
+                              <Component id="jLabelArNovoValor" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabelAmbiente" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
-                                      <Component id="jLabelAmbienteValor" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
-                                      <Component id="jLabelArNovoValor" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabelHumidade" min="-2" pref="107" max="-2" attributes="0"/>
                                       <Component id="jLabelHumidadeValor" min="-2" pref="107" max="-2" attributes="0"/>
                                       <Component id="jLabelArInsuflacaoValor" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace pref="33" max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabelArNovo" max="32767" attributes="0"/>
-                                      <Component id="jLabelRetorno" alignment="0" pref="107" max="32767" attributes="0"/>
-                                      <Component id="jLabelRetornoValor" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabelArInsuflacao" min="-2" pref="107" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLabelHumidade" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="33" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -196,6 +187,15 @@
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabelArNovo" max="32767" attributes="0"/>
+                              <Component id="jLabelRetorno" alignment="0" pref="107" max="32767" attributes="0"/>
+                              <Component id="jLabelRetornoValor" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelArInsuflacao" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
