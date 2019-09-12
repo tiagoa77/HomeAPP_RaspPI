@@ -200,7 +200,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                                     //Relay Verão Desligado
                                     relay2.low();
                                     //Valvula A OFF
-                                    relay3.high();
+                                    relay3.low();
                                     //Abrir a valvula B e esperar durante X segundos para poder desligar
                                     relay4.high();
                                     Thread.sleep(8000);
@@ -231,59 +231,54 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     temperaturaAmbiente = 0.0f;
-                    flagInvernoLigar = false;
-                    flagInvernoDesligar = false;
+                    flagVeraoLigar = false;
+                    flagVeraoDesligar = false;
                     while (true) {
 
                         //Se o botão estiver selecionado
-                        if (jToggleButtonInverno.isSelected()) {
-                            temperaturaAmbiente = tempHumid.get("Temperatura");
+                        if (jToggleButtonVerao.isSelected()) {
 
-                            if (temperaturaAmbiente <= temperaturaDefinida) {
-                                System.out.println(temperaturaAmbiente + " <= " + temperaturaDefinida);
-                                System.out.println("Está o inverno ativo");
+                            if (temperaturaArNovo <= temperaturaDefinida) {
+                                System.out.println(temperaturaArNovo + " <= " + temperaturaDefinida);
+                                System.out.println("Está o verao ativo");
 
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
-                                if (!flagInvernoLigar) {
+                                if (!flagVeraoLigar) {
+                                    //Relay Inverno Desligado
+                                    relay1.low();
+                                    //Relay Verão Ligado
+                                    relay2.high();
+                                    //Valvula A a OFF
+                                    relay3.low();
+                                    //Abrir a valvula A e esperar durante X segundos para poder desligar
+                                    relay4.high();
+                                    Thread.sleep(8000);
+                                    relay4.low();
+                                    
+                                }
+                                //ativar
+                                flagVeraoLigar = true;
+                                flagVeraoDesligar = false;
+
+                            } else {
+                                System.out.println("Nao abrir relays de Verao");
+
+                                if (!flagVeraoDesligar) {
                                     //Relay Inverno Desligado
                                     relay1.low();
                                     //Relay Verão Desligado
                                     relay2.low();
-                                    //Abrir a valvula A e esperar durante X segundos para poder desligar
-                                    relay3.high();
-                                    Thread.sleep(8000);
-                                    relay3.low();
-                                    //Valvula B a OFF
-                                    relay4.low();
-                                }
-                                //ativar
-                                flagInvernoLigar = true;
-                                flagInvernoDesligar = false;
-
-                            } else {
-                                System.out.println("Nao abrir relays de Inverno");
-
-                                if (!flagInvernoDesligar) {
-                                    //Relay Inverno Ligado
-                                    relay1.high();
-                                    //Relay Verão Desligado
-                                    relay2.low();
                                     //Valvula A OFF
-                                    relay3.high();
-                                    //Abrir a valvula B e esperar durante X segundos para poder desligar
-                                    relay4.high();
-                                    Thread.sleep(8000);
+                                    relay3.low();
+                                    //Valvula B OFF
                                     relay4.low();
                                 }
-                                flagInvernoLigar = false;
-                                flagInvernoDesligar = true;
+                                flagVeraoLigar = false;
+                                flagVeraoDesligar = true;
                             }
-
                         }
-
                         sleep(4000);
-
                     }
 
                 } catch (InterruptedException ex) {
