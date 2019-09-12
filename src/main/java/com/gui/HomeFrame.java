@@ -39,7 +39,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relayValvulaAName = "Relay Valvula A";
     private static final Pin relayValvulaB = RaspiPin.GPIO_03;
     private static final String relayValvulaBName = "Relay Valvula B";
-    
+
     //volatile variables
     public volatile HashMap<String, Float> tempHumid;
     public volatile Integer temperaturaDefinida;
@@ -48,14 +48,12 @@ public final class HomeFrame extends javax.swing.JFrame {
     public volatile Double temperaturaArNovo;
     public volatile Double temperaturaArInsuflacao;
     public volatile Double temperaturaArRetorno;
-    
-    
+
     public volatile boolean flagInvernoLigar;
     public volatile boolean flagInvernoDesligar;
     public volatile boolean flagVeraoLigar;
     public volatile boolean flagVeraoDesligar;
-    
-        
+
     final GpioController gpio = GpioFactory.getInstance();
     //provision gpio pin as an output pin and turn on
     final GpioPinDigitalOutput relay1 = gpio.provisionDigitalOutputPin(relayVentInv, relayVentInvName, pinStateOff);
@@ -68,19 +66,18 @@ public final class HomeFrame extends javax.swing.JFrame {
         this.sistema = s;
         //temperatura inicial definida
         this.temperaturaDefinida = 20;
-        this.temperaturaAmbiente=0.0f;
-        this.humidadeAmbiente=0.0f;
-        this.temperaturaArNovo=0.0;
-        this.temperaturaArInsuflacao=0.0;
-        this.temperaturaArRetorno=0.0;
-        
+        this.temperaturaAmbiente = 0.0f;
+        this.humidadeAmbiente = 0.0f;
+        this.temperaturaArNovo = 0.0;
+        this.temperaturaArInsuflacao = 0.0;
+        this.temperaturaArRetorno = 0.0;
+
         initComponents();
         clock();
         temporario();
 
         //Não está a efetuar ações -> deveria ser na main
 //        jToggleButtonOff.setSelected(true);
-        
         jToggleButtonOff.doClick();
 
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
@@ -141,7 +138,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     }
 
     public void modoInverno() {
-        
+
         Thread modoInverno = new Thread() {
             public void run() {
                 try {
@@ -149,18 +146,18 @@ public final class HomeFrame extends javax.swing.JFrame {
                     flagInvernoLigar = false;
                     flagInvernoDesligar = false;
                     while (true) {
-                        
+
                         //Se o botão estiver selecionado
-                        if(jToggleButtonInverno.isSelected()){
-                            temperaturaAmbiente=tempHumid.get("Temperatura");
-                            
-                            if(temperaturaAmbiente <= temperaturaDefinida){
+                        if (jToggleButtonInverno.isSelected()) {
+                            temperaturaAmbiente = tempHumid.get("Temperatura");
+
+                            if (temperaturaAmbiente <= temperaturaDefinida) {
                                 System.out.println(temperaturaAmbiente + " <= " + temperaturaDefinida);
                                 System.out.println("Está o inverno ativo");
-                                
+
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
-                                if(!flagInvernoLigar){
+                                if (!flagInvernoLigar) {
                                     //Relay Inverno Desligado
                                     relay1.low();
                                     //Relay Verão Desligado
@@ -171,17 +168,15 @@ public final class HomeFrame extends javax.swing.JFrame {
                                     relay3.low();
                                     //Valvula B a OFF
                                     relay4.low();
-                                    }
+                                }
                                 //ativar
-                                flagInvernoLigar=true;
-                                flagInvernoDesligar=false;
-                                
-                            }
-                            else {
+                                flagInvernoLigar = true;
+                                flagInvernoDesligar = false;
+
+                            } else {
                                 System.out.println("Nao abrir relays de Inverno");
-                                
-                                
-                                if(!flagInvernoDesligar){
+
+                                if (!flagInvernoDesligar) {
                                     //Relay Inverno Ligado
                                     relay1.high();
                                     //Relay Verão Desligado
@@ -193,14 +188,14 @@ public final class HomeFrame extends javax.swing.JFrame {
                                     Thread.sleep(8000);
                                     relay4.low();
                                 }
-                                flagInvernoLigar=false;
-                                flagInvernoDesligar=true;
+                                flagInvernoLigar = false;
+                                flagInvernoDesligar = true;
                             }
-                            
+
                         }
-                        
+
                         sleep(4000);
-                        
+
                     }
 
                 } catch (InterruptedException ex) {
@@ -210,9 +205,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         };
         modoInverno.start();
     }
-    
+
     public void modoVerao() {
-        
+
         Thread modoVerao = new Thread() {
             public void run() {
                 try {
@@ -220,20 +215,18 @@ public final class HomeFrame extends javax.swing.JFrame {
                     flagInvernoLigar = false;
                     flagInvernoDesligar = false;
                     while (true) {
-                        
+
                         //Se o botão estiver selecionado
-                        if(jToggleButtonInverno.isSelected()){
-                            temperaturaAmbiente=tempHumid.get("Temperatura");
-                            
-                            if(temperaturaAmbiente <= temperaturaDefinida){
+                        if (jToggleButtonInverno.isSelected()) {
+                            temperaturaAmbiente = tempHumid.get("Temperatura");
+
+                            if (temperaturaAmbiente <= temperaturaDefinida) {
                                 System.out.println(temperaturaAmbiente + " <= " + temperaturaDefinida);
                                 System.out.println("Está o inverno ativo");
-                                
-                               
-                                
+
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
-                                if(!flagInvernoLigar){
+                                if (!flagInvernoLigar) {
                                     //Relay Inverno Desligado
                                     relay1.low();
                                     //Relay Verão Desligado
@@ -244,17 +237,15 @@ public final class HomeFrame extends javax.swing.JFrame {
                                     relay3.low();
                                     //Valvula B a OFF
                                     relay4.low();
-                                    }
+                                }
                                 //ativar
-                                flagInvernoLigar=true;
-                                flagInvernoDesligar=false;
-                                
-                            }
-                            else {
+                                flagInvernoLigar = true;
+                                flagInvernoDesligar = false;
+
+                            } else {
                                 System.out.println("Nao abrir relays de Inverno");
-                                
-                                
-                                if(!flagInvernoDesligar){
+
+                                if (!flagInvernoDesligar) {
                                     //Relay Inverno Ligado
                                     relay1.high();
                                     //Relay Verão Desligado
@@ -266,14 +257,14 @@ public final class HomeFrame extends javax.swing.JFrame {
                                     Thread.sleep(8000);
                                     relay4.low();
                                 }
-                                flagInvernoLigar=false;
-                                flagInvernoDesligar=true;
+                                flagInvernoLigar = false;
+                                flagInvernoDesligar = true;
                             }
-                            
+
                         }
-                        
+
                         sleep(4000);
-                        
+
                     }
 
                 } catch (InterruptedException ex) {
@@ -316,7 +307,7 @@ public final class HomeFrame extends javax.swing.JFrame {
 
                 while (true) {
                     try {
-                        
+
                         if (option.equals("ARNOVO")) {
                             temperaturaArNovo = DS18B20.getSensorsTemperatureAdjust(wiredDevices, valor);
                             jLabelArNovoValor.setText(Double.toString(temperaturaArNovo) + " ºC");
@@ -722,7 +713,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     private void jToggleButtonVeraoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonVeraoActionPerformed
         // ButtonActions Verao
 
-        if (jToggleButtonInverno.isSelected()) {
+        if (jToggleButtonVerao.isSelected()) {
 
             jToggleButtonOff.setSelected(false);
             jToggleButtonManual.setSelected(false);
@@ -790,15 +781,16 @@ public final class HomeFrame extends javax.swing.JFrame {
             //Valvula B a OFF
             relay4.low();
 
-        } else {
-            jToggleButtonManual.setSelected(true);
         }
+        else {
+            jToggleButtonManual.setSelected(true);
+    }
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws InterruptedException, IOException, ParseException {
+/**
+ * @param args the command line arguments
+ */
+public static void main(String[] args) throws InterruptedException, IOException, ParseException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -812,13 +804,33 @@ public final class HomeFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeFrame
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeFrame
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeFrame
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeFrame
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -835,15 +847,28 @@ public final class HomeFrame extends javax.swing.JFrame {
                 try {
 
                     new HomeFrame(s).setVisible(true);
-                   
-                    
 
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HomeFrame
+
+.class  
+
+
+.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HomeFrame
+
+.class  
+
+
+.getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
-                    Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HomeFrame
+
+.class  
+
+
+.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
