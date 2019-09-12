@@ -76,6 +76,23 @@ public final class HomeFrame extends javax.swing.JFrame {
         clock();
         temporario();
 
+        //TESTES RELAY
+        System.out.println("Relay 1 - relay Inverno");
+        relay1.high();
+        sleep(2000);
+        System.out.println("Relay 2 - relay Verao");
+        relay2.high();
+        sleep(2000);
+        System.out.println("Relay 3 - relay Valvula A");
+        relay3.high();
+        sleep(2000);
+        System.out.println("Relay 4 - relay Valvula A");
+        relay4.high();
+        sleep(2000);
+        
+        
+        
+        
         //Não está a efetuar ações -> deveria ser na main
 //        jToggleButtonOff.setSelected(true);
         jToggleButtonOff.doClick();
@@ -171,6 +188,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 }
                                 //ativar
                                 flagInvernoLigar = true;
+                                //fica disponivel para voltar a ligar caso a temperatura mude
                                 flagInvernoDesligar = false;
 
                             } else {
@@ -188,8 +206,9 @@ public final class HomeFrame extends javax.swing.JFrame {
                                     Thread.sleep(8000);
                                     relay4.low();
                                 }
-                                flagInvernoLigar = false;
                                 flagInvernoDesligar = true;
+                                //fica disponivel para voltar a ligar caso a temperatura mude
+                                flagInvernoLigar = false;
                             }
 
                         }
@@ -700,11 +719,17 @@ public final class HomeFrame extends javax.swing.JFrame {
         // ButtonActions Inverno
 
         if (jToggleButtonInverno.isSelected()) {
-
+            //reset flags sempre que altera o controlador
+            flagInvernoDesligar=false;
+            flagInvernoLigar=false;
+            flagVeraoDesligar=false;
+            flagVeraoLigar=false;
+            
+            
             jToggleButtonOff.setSelected(false);
             jToggleButtonManual.setSelected(false);
             jToggleButtonVerao.setSelected(false);
-
+            
         } else {
             jToggleButtonInverno.setSelected(true);
         }
@@ -714,11 +739,17 @@ public final class HomeFrame extends javax.swing.JFrame {
         // ButtonActions Verao
 
         if (jToggleButtonVerao.isSelected()) {
-
+            //reset flags sempre que altera o controlador
+            flagInvernoDesligar=false;
+            flagInvernoLigar=false;
+            flagVeraoDesligar=false;
+            flagVeraoLigar=false;
+            
             jToggleButtonOff.setSelected(false);
             jToggleButtonManual.setSelected(false);
             jToggleButtonInverno.setSelected(false);
-
+            
+            
         } else {
             jToggleButtonVerao.setSelected(true);
         }
@@ -729,7 +760,12 @@ public final class HomeFrame extends javax.swing.JFrame {
         // ButtonActions Off
 
         if (jToggleButtonOff.isSelected()) {
-
+            //reset flags sempre que altera o controlador
+            flagInvernoDesligar=false;
+            flagInvernoLigar=false;
+            flagVeraoDesligar=false;
+            flagVeraoLigar=false;
+            
             Thread buttonOff = new Thread() {
                 public void run() {
                     try {
@@ -741,7 +777,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                         //Relay Inverno Ligado
                         relay1.high();
                         //Relay Verão Desligado
-                        relay2.high(); //teste!!!
+                        relay2.low();
                         //Valvula A a OFF
                         relay3.low();
                         //Abrir a valvula B e esperar durante X segundos para poder desligar
@@ -767,7 +803,12 @@ public final class HomeFrame extends javax.swing.JFrame {
         // ButtonActions Manual
 
         if (jToggleButtonManual.isSelected()) {
-
+            //reset flags sempre que altera o controlador
+            flagInvernoDesligar=false;
+            flagInvernoLigar=false;
+            flagVeraoDesligar=false;
+            flagVeraoLigar=false;
+            
             jToggleButtonOff.setSelected(false);
             jToggleButtonInverno.setSelected(false);
             jToggleButtonVerao.setSelected(false);
@@ -781,16 +822,15 @@ public final class HomeFrame extends javax.swing.JFrame {
             //Valvula B a OFF
             relay4.low();
 
-        }
-        else {
+        } else {
             jToggleButtonManual.setSelected(true);
-    }
+        }
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
-/**
- * @param args the command line arguments
- */
-public static void main(String[] args) throws InterruptedException, IOException, ParseException {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws InterruptedException, IOException, ParseException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -804,33 +844,17 @@ public static void main(String[] args) throws InterruptedException, IOException,
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomeFrame
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomeFrame
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomeFrame
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomeFrame
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -849,26 +873,14 @@ public static void main(String[] args) throws InterruptedException, IOException,
                     new HomeFrame(s).setVisible(true);
 
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(HomeFrame
-
-.class  
-
-
-.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HomeFrame.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(HomeFrame
-
-.class  
-
-
-.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HomeFrame.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
-                    Logger.getLogger(HomeFrame
-
-.class  
-
-
-.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HomeFrame.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
