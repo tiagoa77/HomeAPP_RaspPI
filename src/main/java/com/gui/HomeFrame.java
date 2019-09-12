@@ -741,7 +741,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                         //Relay Inverno Ligado
                         relay1.high();
                         //Relay Verão Desligado
-                        relay2.low();
+                        relay2.high(); //teste!!!
                         //Valvula A a OFF
                         relay3.low();
                         //Abrir a valvula B e esperar durante X segundos para poder desligar
