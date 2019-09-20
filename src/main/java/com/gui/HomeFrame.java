@@ -73,6 +73,8 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         initComponents();
         clock();
+        getTempRaspi(2000);
+        
         //temporario();
 
         //TESTES RELAY
@@ -453,8 +455,8 @@ public final class HomeFrame extends javax.swing.JFrame {
                 .addComponent(jLabelCPUTemp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelDataHora)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelClock, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelClock, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelMenuLayout.setVerticalGroup(
