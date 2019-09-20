@@ -73,27 +73,24 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         initComponents();
         clock();
-        temporario();
+        //temporario();
 
         //TESTES RELAY
-        System.out.println("Relay 1 - relay Inverno");
-        relay1.high();
-        sleep(2000);
-        System.out.println("Relay 2 - relay Verao");
-        relay2.high();
-        sleep(2000);
-        System.out.println("Relay 3 - relay Valvula A");
-        relay3.high();
-        sleep(2000);
-        System.out.println("Relay 4 - relay Valvula A");
-        relay4.high();
-        sleep(2000);
+//        System.out.println("Relay 1 - relay Inverno");
+//        relay1.high();
+//        sleep(2000);
+//        System.out.println("Relay 2 - relay Verao");
+//        relay2.high();
+//        sleep(2000);
+//        System.out.println("Relay 3 - relay Valvula A");
+//        relay3.high();
+//        sleep(2000);
+//        System.out.println("Relay 4 - relay Valvula A");
+//        relay4.high();
+//        sleep(2000);
         
         
         
-        
-        //Não está a efetuar ações -> deveria ser na main
-//        jToggleButtonOff.setSelected(true);
         jToggleButtonOff.doClick();
 
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
@@ -901,18 +898,13 @@ public final class HomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelRetornoValor;
     private javax.swing.JLabel jLabelTemperaturaDefinida;
     private javax.swing.JPanel jPanelControl;
-    private javax.swing.JPanel jPanelControl1;
     private javax.swing.JPanel jPanelMenu;
     private javax.swing.JPanel jPanelPorteiro;
     private javax.swing.JPanel jPanelSensors;
     private javax.swing.JToggleButton jToggleButtonInverno;
-    private javax.swing.JToggleButton jToggleButtonInverno1;
     private javax.swing.JToggleButton jToggleButtonManual;
-    private javax.swing.JToggleButton jToggleButtonManual1;
     private javax.swing.JToggleButton jToggleButtonOff;
-    private javax.swing.JToggleButton jToggleButtonOff1;
     private javax.swing.JToggleButton jToggleButtonVerao;
-    private javax.swing.JToggleButton jToggleButtonVerao1;
     // End of variables declaration//GEN-END:variables
 
 }
