@@ -88,9 +88,6 @@ public final class HomeFrame extends javax.swing.JFrame {
 //        System.out.println("Relay 4 - relay Valvula A");
 //        relay4.high();
 //        sleep(2000);
-        
-        
-        
         jToggleButtonOff.doClick();
 
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
@@ -252,7 +249,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                                     relay4.high();
                                     Thread.sleep(8000);
                                     relay4.low();
-                                    
+
                                 }
                                 //ativar
                                 flagVeraoLigar = true;
@@ -366,6 +363,27 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     ;
     
+    
+    public void getTempRaspi(Integer sleepTime) {
+
+        Thread tempRaspi = new Thread() {
+            public void run() {
+                try {
+                    while (true) {
+
+                        jLabelCPUTemp.setText("CPU: " + Sistema.getSystemTemp() + " ºC");
+                        sleep(sleepTime);
+                    }
+
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException | ParseException ex) {
+                    Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        tempRaspi.start();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -379,6 +397,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         jPanelMenu = new javax.swing.JPanel();
         jLabelClock = new javax.swing.JLabel();
         jLabelDataHora = new javax.swing.JLabel();
+        jLabelCPUTemp = new javax.swing.JLabel();
         jPanelSensors = new javax.swing.JPanel();
         jLabelHumidade = new javax.swing.JLabel();
         jLabelHumidadeValor = new javax.swing.JLabel();
@@ -421,22 +440,29 @@ public final class HomeFrame extends javax.swing.JFrame {
         jLabelDataHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelDataHora.setText("Data/Hora:");
 
+        jLabelCPUTemp.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabelCPUTemp.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelCPUTemp.setText("PiTemp");
+
         javax.swing.GroupLayout jPanelMenuLayout = new javax.swing.GroupLayout(jPanelMenu);
         jPanelMenu.setLayout(jPanelMenuLayout);
         jPanelMenuLayout.setHorizontalGroup(
             jPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMenuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabelCPUTemp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelDataHora)
                 .addGap(18, 18, 18)
-                .addComponent(jLabelClock)
-                .addGap(43, 43, 43))
+                .addComponent(jLabelClock, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanelMenuLayout.setVerticalGroup(
             jPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabelClock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelDataHora))
+                .addComponent(jLabelDataHora)
+                .addComponent(jLabelCPUTemp))
         );
 
         jPanelSensors.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sensores", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14))); // NOI18N
@@ -651,7 +677,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         );
         jPanelPorteiroLayout.setVerticalGroup(
             jPanelPorteiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 319, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -712,16 +738,15 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         if (jToggleButtonInverno.isSelected()) {
             //reset flags sempre que altera o controlador
-            flagInvernoDesligar=false;
-            flagInvernoLigar=false;
-            flagVeraoDesligar=false;
-            flagVeraoLigar=false;
-            
-            
+            flagInvernoDesligar = false;
+            flagInvernoLigar = false;
+            flagVeraoDesligar = false;
+            flagVeraoLigar = false;
+
             jToggleButtonOff.setSelected(false);
             jToggleButtonManual.setSelected(false);
             jToggleButtonVerao.setSelected(false);
-            
+
         } else {
             jToggleButtonInverno.setSelected(true);
         }
@@ -732,16 +757,15 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         if (jToggleButtonVerao.isSelected()) {
             //reset flags sempre que altera o controlador
-            flagInvernoDesligar=false;
-            flagInvernoLigar=false;
-            flagVeraoDesligar=false;
-            flagVeraoLigar=false;
-            
+            flagInvernoDesligar = false;
+            flagInvernoLigar = false;
+            flagVeraoDesligar = false;
+            flagVeraoLigar = false;
+
             jToggleButtonOff.setSelected(false);
             jToggleButtonManual.setSelected(false);
             jToggleButtonInverno.setSelected(false);
-            
-            
+
         } else {
             jToggleButtonVerao.setSelected(true);
         }
@@ -753,11 +777,11 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         if (jToggleButtonOff.isSelected()) {
             //reset flags sempre que altera o controlador
-            flagInvernoDesligar=false;
-            flagInvernoLigar=false;
-            flagVeraoDesligar=false;
-            flagVeraoLigar=false;
-            
+            flagInvernoDesligar = false;
+            flagInvernoLigar = false;
+            flagVeraoDesligar = false;
+            flagVeraoLigar = false;
+
             Thread buttonOff = new Thread() {
                 public void run() {
                     try {
@@ -796,11 +820,11 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         if (jToggleButtonManual.isSelected()) {
             //reset flags sempre que altera o controlador
-            flagInvernoDesligar=false;
-            flagInvernoLigar=false;
-            flagVeraoDesligar=false;
-            flagVeraoLigar=false;
-            
+            flagInvernoDesligar = false;
+            flagInvernoLigar = false;
+            flagVeraoDesligar = false;
+            flagVeraoLigar = false;
+
             jToggleButtonOff.setSelected(false);
             jToggleButtonInverno.setSelected(false);
             jToggleButtonVerao.setSelected(false);
@@ -889,6 +913,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelArInsuflacaoValor;
     private javax.swing.JLabel jLabelArNovo;
     private javax.swing.JLabel jLabelArNovoValor;
+    private javax.swing.JLabel jLabelCPUTemp;
     private javax.swing.JLabel jLabelClock;
     private javax.swing.JLabel jLabelDataHora;
     private javax.swing.JLabel jLabelDefineTemp;
