@@ -111,7 +111,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                     while (true) {
                         Calendar cal = new GregorianCalendar();
                         String day = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)), 2, '0');
-                        String month = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.MONTH)), 2, '0');
+                        String month = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.MONTH)+1), 2, '0');
                         String year = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.YEAR)), 4, '0');
 
                         String second = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.SECOND)), 2, '0');
@@ -710,7 +710,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                     .addComponent(jButtonSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanelSensors, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                    .addComponent(jPanelSensors, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                     .addComponent(jPanelPorteiro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelControl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(58, 58, 58))
