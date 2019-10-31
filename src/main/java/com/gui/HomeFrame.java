@@ -38,6 +38,10 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relayValvulaAName = "Relay Valvula A";
     private static final Pin relayValvulaB = RaspiPin.GPIO_03;
     private static final String relayValvulaBName = "Relay Valvula B";
+    private static final Pin relaySensores = RaspiPin.GPIO_04;
+    private static final String relaySensoresName = "Relay Sensores";
+    
+    
 
     //volatile variables
     public volatile HashMap<String, Float> tempHumid;
@@ -59,7 +63,8 @@ public final class HomeFrame extends javax.swing.JFrame {
     final GpioPinDigitalOutput relay2 = gpio.provisionDigitalOutputPin(relayVentVer, relayVentVerName, pinStateOff);
     final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOff);
     final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOff);
-
+    final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOff);
+    
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
         this.sistema = s;
@@ -74,6 +79,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         initComponents();
         clock();
         getTempRaspi(2000);
+        //milisec*sec*min
+        restart_sensores(1000*60*60);
+        
         
         //temporario();
 
@@ -387,6 +395,28 @@ public final class HomeFrame extends javax.swing.JFrame {
         tempRaspi.start();
     }
 
+    public void restart_sensores(Integer time) {
+
+        Thread restart_sensores = new Thread() {
+            public void run() {
+                try {
+                    while (true) {
+                        
+                        relaySensor.high();
+                        relaySensor.low();
+                        
+                        sleep(time);
+                    }
+
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        restart_sensores.start();
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -420,8 +450,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         jToggleButtonOff = new javax.swing.JToggleButton();
         jToggleButtonVerao = new javax.swing.JToggleButton();
         jToggleButtonInverno = new javax.swing.JToggleButton();
-        jButtonSair = new javax.swing.JButton();
         jPanelPorteiro = new javax.swing.JPanel();
+        jButtonSair = new javax.swing.JButton();
+        jButtonDesligar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -453,7 +484,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelCPUTemp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
                 .addComponent(jLabelDataHora)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelClock, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -660,15 +691,6 @@ public final class HomeFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButtonSair.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButtonSair.setText("Sair");
-        jButtonSair.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSairActionPerformed(evt);
-            }
-        });
-
         jPanelPorteiro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Porteiro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14))); // NOI18N
 
         javax.swing.GroupLayout jPanelPorteiroLayout = new javax.swing.GroupLayout(jPanelPorteiro);
@@ -681,6 +703,24 @@ public final class HomeFrame extends javax.swing.JFrame {
             jPanelPorteiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 319, Short.MAX_VALUE)
         );
+
+        jButtonSair.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButtonSair.setText("Sair");
+        jButtonSair.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairActionPerformed(evt);
+            }
+        });
+
+        jButtonDesligar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButtonDesligar.setText("Desligar");
+        jButtonDesligar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonDesligar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDesligarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -696,9 +736,12 @@ public final class HomeFrame extends javax.swing.JFrame {
                         .addGap(16, 16, 16)
                         .addComponent(jPanelPorteiro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSair, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonDesligar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -706,8 +749,9 @@ public final class HomeFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonDesligar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanelSensors, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
@@ -720,7 +764,6 @@ public final class HomeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
-        // TODO add your handling code here:
 
         System.exit(0);
     }//GEN-LAST:event_jButtonSairActionPerformed
@@ -845,6 +888,10 @@ public final class HomeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jToggleButtonManualActionPerformed
 
+    private void jButtonDesligarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesligarActionPerformed
+        Sistema.shutdownRaspi();
+    }//GEN-LAST:event_jButtonDesligarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -907,6 +954,7 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAumentaTemp;
+    private javax.swing.JButton jButtonDesligar;
     private javax.swing.JButton jButtonDiminuiTemp;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabelAmbiente;
