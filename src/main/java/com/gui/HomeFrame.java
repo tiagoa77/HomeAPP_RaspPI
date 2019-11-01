@@ -102,11 +102,11 @@ public final class HomeFrame extends javax.swing.JFrame {
 //        sleep(2000);
 
         System.out.println("Relay Corte");
-        relaySensor.high();
+        relaySensor.low();
         sleep(2000);
         
         System.out.println("Relay Ventoinha");
-        relayVentoinha.high();
+        relayVentoinha.low();
         sleep(2000);
         
         
