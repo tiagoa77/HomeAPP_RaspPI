@@ -40,7 +40,8 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relayValvulaBName = "Relay Valvula B";
     private static final Pin relaySensores = RaspiPin.GPIO_04;
     private static final String relaySensoresName = "Relay Sensores";
-    
+    private static final Pin relayVentoinhaCPU = RaspiPin.GPIO_05;
+    private static final String relayVentoinhaCPUName = "Relay Ventoinha CPU";
     
 
     //volatile variables
@@ -64,6 +65,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOff);
     final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOff);
     final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOff);
+    final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOff);
     
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
@@ -98,6 +100,16 @@ public final class HomeFrame extends javax.swing.JFrame {
 //        System.out.println("Relay 4 - relay Valvula A");
 //        relay4.high();
 //        sleep(2000);
+
+        System.out.println("Relay Corte");
+        relaySensor.high();
+        sleep(2000);
+        
+        System.out.println("Relay Ventoinha");
+        relayVentoinha.high();
+        sleep(2000);
+        
+        
         jToggleButtonOff.doClick();
 
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
