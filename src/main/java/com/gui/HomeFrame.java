@@ -402,10 +402,10 @@ public final class HomeFrame extends javax.swing.JFrame {
                 try {
                     while (true) {
                         
-                        relaySensor.high();
                         relaySensor.low();
+                        relaySensor.high();
                         
-                        sleep(time);
+                        sleep(4000);
                     }
 
                 } catch (InterruptedException ex) {
