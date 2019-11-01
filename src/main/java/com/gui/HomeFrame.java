@@ -64,8 +64,8 @@ public final class HomeFrame extends javax.swing.JFrame {
     final GpioPinDigitalOutput relay2 = gpio.provisionDigitalOutputPin(relayVentVer, relayVentVerName, pinStateOff);
     final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOff);
     final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOff);
-    final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOff);
-    final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOff);
+    final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOn);
+    final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOn);
     
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
