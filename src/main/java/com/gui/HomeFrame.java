@@ -82,7 +82,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         clock();
         getTempRaspi(2000);
         //milisec*sec*min
-        restart_sensores(1000*60*60);
+        //restart_sensores(1000*60*60);
         
         
         //temporario();
