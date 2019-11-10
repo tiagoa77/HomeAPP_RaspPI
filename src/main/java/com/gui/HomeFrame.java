@@ -52,7 +52,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     public volatile Double temperaturaArNovo;
     public volatile Double temperaturaArInsuflacao;
     public volatile Double temperaturaArRetorno;
-
+    
     public volatile boolean flagInvernoLigar;
     public volatile boolean flagInvernoDesligar;
     public volatile boolean flagVeraoLigar;
@@ -66,7 +66,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOff);
     final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOn);
     final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOn);
-    
+
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
         this.sistema = s;
@@ -81,12 +81,10 @@ public final class HomeFrame extends javax.swing.JFrame {
         initComponents();
         clock();
         getTempRaspi(2000);
-        //milisec*sec*min
-        //restart_sensores(1000*60*60);
-        
-        
-        //temporario();
+        //milisec*sec*min - 1000*60*60
+        restart_sensores(5000);
 
+        temporario();
         //TESTES RELAY
 //        System.out.println("Relay 1 - relay Inverno");
 //        relay1.high();
@@ -100,16 +98,6 @@ public final class HomeFrame extends javax.swing.JFrame {
 //        System.out.println("Relay 4 - relay Valvula A");
 //        relay4.high();
 //        sleep(2000);
-
-        System.out.println("Relay Corte");
-        relaySensor.low();
-        sleep(2000);
-        
-        System.out.println("Relay Ventoinha");
-        relayVentoinha.low();
-        sleep(2000);
-        
-        
         jToggleButtonOff.doClick();
 
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
@@ -131,7 +119,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                     while (true) {
                         Calendar cal = new GregorianCalendar();
                         String day = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)), 2, '0');
-                        String month = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.MONTH)+1), 2, '0');
+                        String month = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.MONTH) + 1), 2, '0');
                         String year = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.YEAR)), 4, '0');
 
                         String second = Funcoes.padLeftZeros(Integer.toString(cal.get(Calendar.SECOND)), 2, '0');
@@ -359,12 +347,8 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
 
         };
-
         wiredSensorTemps.start();
-
-    }
-
-    ;
+    };
     
     public void incrementarTemp(String operacao) {
 
@@ -381,9 +365,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         incrementarTemp.start();
-    }
-
-    ;
+    };
     
     
     public void getTempRaspi(Integer sleepTime) {
@@ -392,8 +374,16 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
-
+                        
                         jLabelCPUTemp.setText("CPU: " + Sistema.getSystemTemp() + " ºC");
+                        Integer temp = Integer.parseInt(Sistema.getSystemTemp());
+                        
+                        if (temp >= 55) {
+                            relaySensor.low();
+                            sleep(1000*60);
+                            relaySensor.high();
+                        }
+                        
                         sleep(sleepTime);
                     }
 
@@ -407,17 +397,22 @@ public final class HomeFrame extends javax.swing.JFrame {
         tempRaspi.start();
     }
 
+    ;
+
     public void restart_sensores(Integer time) {
 
         Thread restart_sensores = new Thread() {
             public void run() {
                 try {
                     while (true) {
-                        
-                        relaySensor.low();
-                        relaySensor.high();
-                        
-                        sleep(4000);
+                        if (temperaturaAmbiente == 0.0 || temperaturaArInsuflacao == 0.0 || temperaturaArNovo == 0.0 || temperaturaArRetorno == 0.0) {
+                            relaySensor.low();
+                            sleep(1000);
+                            relaySensor.high();
+
+                        }
+                        //time until check again temps
+                        sleep(time);
                     }
 
                 } catch (InterruptedException ex) {
@@ -427,6 +422,8 @@ public final class HomeFrame extends javax.swing.JFrame {
         };
         restart_sensores.start();
     }
+
+    ;
     
     
     /**
