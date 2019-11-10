@@ -52,6 +52,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     public volatile Double temperaturaArNovo;
     public volatile Double temperaturaArInsuflacao;
     public volatile Double temperaturaArRetorno;
+    public volatile Integer temperaturaRaspi;
     
     public volatile boolean flagInvernoLigar;
     public volatile boolean flagInvernoDesligar;
@@ -80,8 +81,9 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         initComponents();
         clock();
-        getTempRaspi(2000);
+        getTempRaspi(5000);
         //milisec*sec*min - 1000*60*60
+        startCPUVent(5000);
         restart_sensores(1000*10);
 
         //temporario();
@@ -376,14 +378,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                     while (true) {
                         
                         jLabelCPUTemp.setText("CPU: " + Sistema.getSystemTemp() + " ºC");
-                        Integer temp = Integer.parseInt(Sistema.getSystemTemp());
-                        
-                        if (temp >= 55) {
-                            relaySensor.high();
-                            sleep(1000*60);
-                            relaySensor.low();
-                        }
-                        
+                        temperaturaRaspi = Integer.parseInt(Sistema.getSystemTemp());
                         sleep(sleepTime);
                     }
 
@@ -395,9 +390,34 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         tempRaspi.start();
-    }
+    };
+    
+        public void startCPUVent(Integer sleepTime) {
 
-    ;
+        Thread ventoinha = new Thread() {
+            public void run() {
+                try {
+                    while (true) {
+                        
+                         if (temperaturaRaspi >= 55) {
+                            
+                            relayVentoinha.high();
+                            sleep(1000*60);
+                            relayVentoinha.low();
+                        }
+                        
+                        sleep(sleepTime);
+                    }
+
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        ventoinha.start();
+    };
+    
+                        
 
     public void restart_sensores(Integer time) {
 
