@@ -64,8 +64,8 @@ public final class HomeFrame extends javax.swing.JFrame {
     final GpioPinDigitalOutput relay2 = gpio.provisionDigitalOutputPin(relayVentVer, relayVentVerName, pinStateOff);
     final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOff);
     final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOff);
-    final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOn);
-    final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOn);
+    final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOff);
+    final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOff);
 
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
@@ -82,9 +82,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         clock();
         getTempRaspi(2000);
         //milisec*sec*min - 1000*60*60
-        restart_sensores(5000);
+        restart_sensores(1000*10);
 
-        temporario();
+        //temporario();
         //TESTES RELAY
 //        System.out.println("Relay 1 - relay Inverno");
 //        relay1.high();
@@ -379,9 +379,9 @@ public final class HomeFrame extends javax.swing.JFrame {
                         Integer temp = Integer.parseInt(Sistema.getSystemTemp());
                         
                         if (temp >= 55) {
-                            relaySensor.low();
-                            sleep(1000*60);
                             relaySensor.high();
+                            sleep(1000*60);
+                            relaySensor.low();
                         }
                         
                         sleep(sleepTime);
@@ -405,14 +405,16 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
+                        //time until check again temps
+                        sleep(time);
+                        
                         if (temperaturaAmbiente == 0.0 || temperaturaArInsuflacao == 0.0 || temperaturaArNovo == 0.0 || temperaturaArRetorno == 0.0) {
                             relaySensor.low();
-                            sleep(1000);
+                            sleep(2000);
                             relaySensor.high();
 
                         }
-                        //time until check again temps
-                        sleep(time);
+                        
                     }
 
                 } catch (InterruptedException ex) {
