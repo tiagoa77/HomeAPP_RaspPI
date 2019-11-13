@@ -156,7 +156,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         clock.start();
-    }
+    };
 
     public void temporario() {
 
@@ -174,7 +174,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         temporario.start();
-    }
+    };
 
     public void modoInverno() {
 
@@ -245,7 +245,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoInverno.start();
-    }
+    };
 
     public void modoVerao() {
 
@@ -309,7 +309,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoVerao.start();
-    }
+    };
 
     public void getTempHumidade(Integer sleepTime) {
 
@@ -334,7 +334,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         tempHum.start();
-    }
+    };
 
     public void wiredSensorTemps(String wiredDevices, Double valor, Integer sleepTimeMilis, String option) {
 
@@ -366,7 +366,7 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         };
         wiredSensorTemps.start();
-    }
+    };
 
     
     public void incrementarTemp(String operacao) {
@@ -384,7 +384,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         incrementarTemp.start();
-    }
+    };
     
     
     public void getTempRaspi(Integer sleepTime) {
@@ -407,7 +407,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         tempRaspi.start();
-    }
+    };
     
     public void startCPUVent(Integer sleepTime) {
 
@@ -431,7 +431,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         ventoinha.start();
-    }
+    };
                      
 
     public void restart_sensores(Integer time) {
