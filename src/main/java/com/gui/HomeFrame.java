@@ -171,7 +171,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         Thread modoInverno = new Thread() {
             public void run() {
                 try {
-                    temperaturaAmbiente = 0.0f;
+                    //temperaturaAmbiente = 0.0f;
                     flagInvernoLigar = false;
                     flagInvernoDesligar = false;
                     
@@ -179,10 +179,6 @@ public final class HomeFrame extends javax.swing.JFrame {
 
                         //Se o botão estiver selecionado
                         if (jToggleButtonInverno.isSelected()) {
-                            
-                            
-                            temperaturaAmbiente = tempHumid.get("Temperatura");
-                            System.out.println("tempA:" + temperaturaAmbiente);
 
                             if (temperaturaAmbiente <= temperaturaDefinida) {
                                 
@@ -316,8 +312,13 @@ public final class HomeFrame extends javax.swing.JFrame {
 
                         tempHumid = dht.getTemperature(29);
                         //0 - Temp // 1 - Humidade
-                        jLabelAmbienteValor.setText(Float.toString(tempHumid.get("Temperatura")) + " ºC");
-                        jLabelHumidadeValor.setText(Float.toString(tempHumid.get("Humidade")) + " %");
+                        
+                        temperaturaAmbiente=tempHumid.get("Temperatura");
+                        humidadeAmbiente=tempHumid.get("Humidade");
+                        jLabelAmbienteValor.setText(Float.toString(temperaturaAmbiente) + " ºC");
+                        jLabelHumidadeValor.setText(Float.toString(humidadeAmbiente) + " %");
+                        //jLabelAmbienteValor.setText(Float.toString(tempHumid.get("Temperatura")) + " ºC");
+                        //jLabelHumidadeValor.setText(Float.toString(tempHumid.get("Humidade")) + " %");
                         sleep(sleepTime);
 
                     }
