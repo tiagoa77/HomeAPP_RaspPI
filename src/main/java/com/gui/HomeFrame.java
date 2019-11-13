@@ -51,7 +51,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     public volatile Double temperaturaArNovo;
     public volatile Double temperaturaArInsuflacao;
     public volatile Double temperaturaArRetorno;
-    public volatile Integer temperaturaRaspi;
+    public volatile Float temperaturaRaspi;
 
     public volatile boolean flagInvernoLigar;
     public volatile boolean flagInvernoDesligar;
@@ -386,7 +386,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                 try {
                     while (true) {
                         String temp = Sistema.getSystemTemp();
-                        temperaturaRaspi = Integer.parseInt(temp);
+                        temperaturaRaspi = Float.parseFloat(temp);
                         jLabelCPUTemp.setText("CPU: " + temp + " ºC");
                         
                         sleep(sleepTime);
