@@ -123,7 +123,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         wiredSensorTemps("28-03129779f399", 2.6, 2000, "ARINSUFLACAO");
         wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
         
-        startCPUVent(5000);
+        //startCPUVent(5000);
         restart_sensores(1000 * 10);
         modoInverno();
         modoVerao();
@@ -422,7 +422,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
-
+                        System.out.println("temperaturaRAspi" + temperaturaRaspi);
                         if (temperaturaRaspi >= 55) {
 
                             relayVentoinha.low();
