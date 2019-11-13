@@ -126,7 +126,8 @@ public final class HomeFrame extends javax.swing.JFrame {
         modoVerao();
 
         startCPUVent(5000);
-        restart_sensores(1000 * 10);
+        //restart_sensores(1000 * 10);
+        
     }
 
     public void clock() {
@@ -365,7 +366,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         wiredSensorTemps.start();
-    }
+    };
 
     
     public void incrementarTemp(String operacao) {
@@ -383,7 +384,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         incrementarTemp.start();
-    }
+    };
     
     
     public void getTempRaspi(Integer sleepTime) {
@@ -406,7 +407,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         tempRaspi.start();
-    }
+    };
     
     public void startCPUVent(Integer sleepTime) {
 
@@ -430,7 +431,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         ventoinha.start();
-    }
+    };
                      
 
     public void restart_sensores(Integer time) {
@@ -443,6 +444,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                         sleep(time);
 
                         if (temperaturaAmbiente == 0.0 || temperaturaArInsuflacao == 0.0 || temperaturaArNovo == 0.0 || temperaturaArRetorno == 0.0) {
+                            System.out.println("\ntemperaturaAmbiente: " + temperaturaAmbiente + "temperaturaArInsuflacao: " + temperaturaArInsuflacao + "temperaturaArNovo: " + temperaturaArNovo + "temperaturaArRetorno: " + temperaturaArRetorno);
                             relaySensor.low();
                             sleep(2000);
                             relaySensor.high();
@@ -455,7 +457,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         restart_sensores.start();
-    }
+    };
     
     /**
      * This method is called from within the constructor to initialize the form.
