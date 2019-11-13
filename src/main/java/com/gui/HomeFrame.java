@@ -126,7 +126,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         modoVerao();
 
         startCPUVent(5000);
-        //restart_sensores(1000 * 10);
+        restart_sensores(1000 * 10);
         
     }
 
