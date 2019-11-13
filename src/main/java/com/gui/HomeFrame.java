@@ -71,16 +71,19 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         this.sistema = s;
         //temperatura inicial definida
-        this.temperaturaDefinida = 20;
+        //this.temperaturaDefinida = 20;
         this.temperaturaAmbiente = 0.0f;
         this.humidadeAmbiente = 0.0f;
         this.temperaturaArNovo = 0.0;
         this.temperaturaArInsuflacao = 0.0;
         this.temperaturaArRetorno = 0.0;
 
+        Calendar caland = new GregorianCalendar();
+        Integer month = caland.get(Calendar.MONTH) + 1;
+        
         initComponents();
         clock();
-        getTempRaspi(5000);
+        getTempRaspi(1000);
         //milisec*sec*min - 1000*60*60
         startCPUVent(5000);
         restart_sensores(1000 * 10);
@@ -99,8 +102,21 @@ public final class HomeFrame extends javax.swing.JFrame {
 //        System.out.println("Relay 4 - relay Valvula A");
 //        relay4.high();
 //        sleep(2000);
-        jToggleButtonOff.doClick();
 
+        if(month==10 || month==11 || month==12 || month==1 || month==2 || month==3){
+            this.temperaturaDefinida = 25;
+            jToggleButtonInverno.doClick();
+            
+        } else if (month==6 || month==7 || month==8 || month==9){
+            this.temperaturaDefinida = 13;
+            jToggleButtonVerao.doClick();
+            
+        }
+        else{
+            this.temperaturaDefinida = 20;
+            jToggleButtonOff.doClick();
+        }
+        
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
 
         getTempHumidade(2000);
@@ -376,9 +392,9 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
-
+                        
                         jLabelCPUTemp.setText("CPU: " + Sistema.getSystemTemp() + " ºC");
-                        temperaturaRaspi = Integer.parseInt(Sistema.getSystemTemp());
+                        //temperaturaRaspi = Integer.parseInt(Sistema.getSystemTemp());
                         sleep(sleepTime);
                     }
 
@@ -404,9 +420,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                             relayVentoinha.low();
                             sleep(1000 * 60);
                             relayVentoinha.high();
-                            
                         }
-
                         sleep(sleepTime);
                     }
 
@@ -442,9 +456,6 @@ public final class HomeFrame extends javax.swing.JFrame {
         };
         restart_sensores.start();
     }
-
-    ;
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
