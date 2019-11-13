@@ -71,7 +71,7 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         this.sistema = s;
         //temperatura inicial definida
-        //this.temperaturaDefinida = 20;
+        this.temperaturaDefinida = 20;
         this.temperaturaAmbiente = 0.0f;
         this.humidadeAmbiente = 0.0f;
         this.temperaturaArNovo = 0.0;
@@ -157,7 +157,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         clock.start();
-    }
+    };
 
     public void temporario() {
 
@@ -175,7 +175,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         temporario.start();
-    }
+    };
 
     public void modoInverno() {
 
@@ -246,7 +246,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoInverno.start();
-    }
+    };
 
     public void modoVerao() {
 
@@ -310,7 +310,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoVerao.start();
-    }
+    };
 
     public void getTempHumidade(Integer sleepTime) {
 
@@ -335,7 +335,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         tempHum.start();
-    }
+    };
 
     public void wiredSensorTemps(String wiredDevices, Double valor, Integer sleepTimeMilis, String option) {
 
