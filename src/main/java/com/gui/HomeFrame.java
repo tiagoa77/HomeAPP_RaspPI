@@ -361,7 +361,6 @@ public final class HomeFrame extends javax.swing.JFrame {
         };
         wiredSensorTemps.start();
     };
-
     
     public void incrementarTemp(String operacao) {
 
@@ -380,16 +379,16 @@ public final class HomeFrame extends javax.swing.JFrame {
         incrementarTemp.start();
     };
     
-    
     public void getTempRaspi(Integer sleepTime) {
 
         Thread tempRaspi = new Thread() {
             public void run() {
                 try {
                     while (true) {
+                        String temp = Sistema.getSystemTemp();
+                        temperaturaRaspi = Integer.parseInt(temp);
+                        jLabelCPUTemp.setText("CPU: " + temp + " ºC");
                         
-                        jLabelCPUTemp.setText("CPU: " + Sistema.getSystemTemp() + " ºC");
-                        //temperaturaRaspi = Integer.parseInt(Sistema.getSystemTemp());
                         sleep(sleepTime);
                     }
 
