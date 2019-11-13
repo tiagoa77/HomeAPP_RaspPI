@@ -188,16 +188,15 @@ public final class HomeFrame extends javax.swing.JFrame {
                     flagInvernoLigar = false;
                     flagInvernoDesligar = false;
                     System.out.println("testessssssssssssss");
-                    System.out.println("testessssssssssssss"+tempHumid.toString());
                     while (true) {
 
                         //Se o botão estiver selecionado
                         if (jToggleButtonInverno.isSelected()) {
-                            System.out.println("testessssssssssssss"+tempHumid.toString());
+                            //System.out.println("testessssssssssssss"+tempHumid.toString());
                             
                             //temperaturaAmbiente = tempHumid.get("Temperatura");
                             temperaturaAmbiente = 25.0f;
-                            System.out.println("tempA:" + temperaturaAmbiente.toString());
+                            //System.out.println("tempA:" + temperaturaAmbiente.toString());
 
                             if (temperaturaAmbiente <= temperaturaDefinida) {
                                 System.out.println(temperaturaAmbiente + " <= " + temperaturaDefinida);
