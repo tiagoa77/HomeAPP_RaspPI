@@ -78,8 +78,6 @@ public final class HomeFrame extends javax.swing.JFrame {
         this.temperaturaArInsuflacao = 0.0;
         this.temperaturaArRetorno = 0.0;
         
-        this.tempHumid.put("Temperatura", 0.0f);
-        this.tempHumid.put("Humidade", 0.0f);
 
         Calendar caland = new GregorianCalendar();
         Integer month = caland.get(Calendar.MONTH) + 1;
