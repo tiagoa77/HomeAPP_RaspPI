@@ -110,7 +110,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         wiredSensorTemps("28-03129779f399", 2.6, 2000, "ARINSUFLACAO");
         wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
         
-        //startCPUVent(5000);
+        startCPUVent(5000);
         restart_sensores(1000 * 10);
         modoInverno();
         modoVerao();
@@ -171,7 +171,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         Thread modoInverno = new Thread() {
             public void run() {
                 try {
-                    //temperaturaAmbiente = 0.0f;
+                    temperaturaAmbiente = 0.0f;
                     flagInvernoLigar = false;
                     flagInvernoDesligar = false;
                     
@@ -204,7 +204,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 flagInvernoDesligar = false;
 
                             } else {
-                                System.out.println("Nao abrir relays de Inverno");
+                                //System.out.println("Nao abrir relays de Inverno");
 
                                 if (!flagInvernoDesligar) {
                                     //Relay Inverno Ligado
