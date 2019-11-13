@@ -77,6 +77,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         this.temperaturaArNovo = 0.0;
         this.temperaturaArInsuflacao = 0.0;
         this.temperaturaArRetorno = 0.0;
+        
+        this.tempHumid.put("Temperatura", 0.0f);
+        this.tempHumid.put("Humidade", 0.0f);
 
         Calendar caland = new GregorianCalendar();
         Integer month = caland.get(Calendar.MONTH) + 1;
@@ -84,23 +87,9 @@ public final class HomeFrame extends javax.swing.JFrame {
         initComponents();
         clock();
         getTempRaspi(1000);
-        //milisec*sec*min - 1000*60*60
         
 
-        temporario();
-        //TESTES RELAY
-//        System.out.println("Relay 1 - relay Inverno");
-//        relay1.high();
-//        sleep(2000);
-//        System.out.println("Relay 2 - relay Verao");
-//        relay2.high();
-//        sleep(2000);
-//        System.out.println("Relay 3 - relay Valvula A");
-//        relay3.high();
-//        sleep(2000);
-//        System.out.println("Relay 4 - relay Valvula A");
-//        relay4.high();
-//        sleep(2000);
+        //temporario();
 
         if(month==10 || month==11 || month==12 || month==1 || month==2 || month==3){
             this.temperaturaDefinida = 25;
@@ -187,20 +176,19 @@ public final class HomeFrame extends javax.swing.JFrame {
                     temperaturaAmbiente = 0.0f;
                     flagInvernoLigar = false;
                     flagInvernoDesligar = false;
-                    System.out.println("testessssssssssssss");
+                    
                     while (true) {
 
                         //Se o botão estiver selecionado
                         if (jToggleButtonInverno.isSelected()) {
-                            //System.out.println("testessssssssssssss"+tempHumid.toString());
                             
-                            //temperaturaAmbiente = tempHumid.get("Temperatura");
-                            temperaturaAmbiente = 25.0f;
-                            //System.out.println("tempA:" + temperaturaAmbiente.toString());
+                            
+                            temperaturaAmbiente = tempHumid.get("Temperatura");
+                            System.out.println("tempA:" + temperaturaAmbiente);
 
                             if (temperaturaAmbiente <= temperaturaDefinida) {
-                                System.out.println(temperaturaAmbiente + " <= " + temperaturaDefinida);
-                                System.out.println("Está o inverno ativo");
+                                
+                                //System.out.println("Está o inverno ativo");
 
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
@@ -269,8 +257,8 @@ public final class HomeFrame extends javax.swing.JFrame {
                         if (jToggleButtonVerao.isSelected()) {
 
                             if (temperaturaArNovo <= temperaturaDefinida) {
-                                System.out.println(temperaturaArNovo + " <= " + temperaturaDefinida);
-                                System.out.println("Está o verao ativo");
+                                //System.out.println(temperaturaArNovo + " <= " + temperaturaDefinida);
+                                //System.out.println("Está o verao ativo");
 
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
@@ -292,7 +280,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 flagVeraoDesligar = false;
 
                             } else {
-                                System.out.println("Nao abrir relays de Verao");
+                                //System.out.println("Nao abrir relays de Verao");
 
                                 if (!flagVeraoDesligar) {
                                     //Relay Inverno Desligado

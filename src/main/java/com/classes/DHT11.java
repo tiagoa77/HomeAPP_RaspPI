@@ -94,8 +94,8 @@ public class DHT11 {
             oldTemp=c;
             oldHum=h;
             
-            output.put("Temperatura",c);
-            output.put("Humidade",h);
+            output.put("Temperatura",oldTemp);
+            output.put("Humidade",oldHum);
             
             //System.out.println("Humidity = " + output.get(0) + " Temperature = " + output.get(1) + "(" + f + "f)");
             
