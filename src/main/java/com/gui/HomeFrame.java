@@ -85,8 +85,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         clock();
         getTempRaspi(1000);
         //milisec*sec*min - 1000*60*60
-        startCPUVent(5000);
-        restart_sensores(1000 * 10);
+        
 
         //temporario();
         //TESTES RELAY
@@ -126,6 +125,8 @@ public final class HomeFrame extends javax.swing.JFrame {
         modoInverno();
         modoVerao();
 
+        startCPUVent(5000);
+        restart_sensores(1000 * 10);
     }
 
     public void clock() {
