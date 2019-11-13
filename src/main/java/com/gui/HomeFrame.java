@@ -77,6 +77,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         this.temperaturaArNovo = 0.0;
         this.temperaturaArInsuflacao = 0.0;
         this.temperaturaArRetorno = 0.0;
+        this.temperaturaRaspi = 0.0f;
         
 
         Calendar caland = new GregorianCalendar();
@@ -412,7 +413,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                         if (temperaturaRaspi >= 55) {
 
                             relayVentoinha.low();
-                            sleep(1000 * 60);
+                            sleep(1000*60);
                             relayVentoinha.high();
                         }
                         sleep(sleepTime);
