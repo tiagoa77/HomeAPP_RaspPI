@@ -42,7 +42,6 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relaySensoresName = "Relay Sensores";
     private static final Pin relayVentoinhaCPU = RaspiPin.GPIO_05;
     private static final String relayVentoinhaCPUName = "Relay Ventoinha CPU";
-    
 
     //volatile variables
     public volatile HashMap<String, Float> tempHumid;
@@ -53,7 +52,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     public volatile Double temperaturaArInsuflacao;
     public volatile Double temperaturaArRetorno;
     public volatile Integer temperaturaRaspi;
-    
+
     public volatile boolean flagInvernoLigar;
     public volatile boolean flagInvernoDesligar;
     public volatile boolean flagVeraoLigar;
@@ -84,7 +83,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         getTempRaspi(5000);
         //milisec*sec*min - 1000*60*60
         startCPUVent(5000);
-        restart_sensores(1000*10);
+        restart_sensores(1000 * 10);
 
         //temporario();
         //TESTES RELAY
@@ -350,7 +349,8 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         };
         wiredSensorTemps.start();
-    };
+    }
+
     
     public void incrementarTemp(String operacao) {
 
@@ -367,7 +367,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         incrementarTemp.start();
-    };
+    }
     
     
     public void getTempRaspi(Integer sleepTime) {
@@ -376,7 +376,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
-                        
+
                         jLabelCPUTemp.setText("CPU: " + Sistema.getSystemTemp() + " ºC");
                         temperaturaRaspi = Integer.parseInt(Sistema.getSystemTemp());
                         sleep(sleepTime);
@@ -390,22 +390,23 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         tempRaspi.start();
-    };
+    }
     
-        public void startCPUVent(Integer sleepTime) {
+    public void startCPUVent(Integer sleepTime) {
 
         Thread ventoinha = new Thread() {
             public void run() {
                 try {
                     while (true) {
-                        
-                         if (temperaturaRaspi >= 55) {
-                            
-                            relayVentoinha.high();
-                            sleep(1000*60);
+
+                        if (temperaturaRaspi >= 55) {
+
                             relayVentoinha.low();
+                            sleep(1000 * 60);
+                            relayVentoinha.high();
+                            
                         }
-                        
+
                         sleep(sleepTime);
                     }
 
@@ -415,9 +416,8 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         ventoinha.start();
-    };
-    
-                        
+    }
+                     
 
     public void restart_sensores(Integer time) {
 
@@ -427,14 +427,12 @@ public final class HomeFrame extends javax.swing.JFrame {
                     while (true) {
                         //time until check again temps
                         sleep(time);
-                        
+
                         if (temperaturaAmbiente == 0.0 || temperaturaArInsuflacao == 0.0 || temperaturaArNovo == 0.0 || temperaturaArRetorno == 0.0) {
                             relaySensor.low();
                             sleep(2000);
                             relaySensor.high();
-
                         }
-                        
                     }
 
                 } catch (InterruptedException ex) {
