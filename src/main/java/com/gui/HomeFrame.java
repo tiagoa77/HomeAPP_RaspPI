@@ -42,6 +42,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relaySensoresName = "Relay Sensores";
     private static final Pin relayVentoinhaCPU = RaspiPin.GPIO_05;
     private static final String relayVentoinhaCPUName = "Relay Ventoinha CPU";
+    private static final Integer tempMaxCPU = 60;
 
     //volatile variables
     public volatile HashMap<String, Float> tempHumid;
@@ -409,8 +410,8 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
-                        System.out.println("temperaturaRAspi" + temperaturaRaspi);
-                        if (temperaturaRaspi >= 55) {
+                        //System.out.println("temperaturaRAspi" + temperaturaRaspi);
+                        if (temperaturaRaspi >= tempMaxCPU) {
 
                             relayVentoinha.low();
                             sleep(1000*60);
@@ -438,7 +439,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                         sleep(time);
 
                         if (temperaturaAmbiente == 0.0 || temperaturaArInsuflacao == 0.0 || temperaturaArNovo == 0.0 || temperaturaArRetorno == 0.0) {
-                            System.out.println("\ntemperaturaAmbiente: " + temperaturaAmbiente + "temperaturaArInsuflacao: " + temperaturaArInsuflacao + "temperaturaArNovo: " + temperaturaArNovo + "temperaturaArRetorno: " + temperaturaArRetorno);
+                            //System.out.println("\ntemperaturaAmbiente: " + temperaturaAmbiente + "temperaturaArInsuflacao: " + temperaturaArInsuflacao + "temperaturaArNovo: " + temperaturaArNovo + "temperaturaArRetorno: " + temperaturaArRetorno);
                             relaySensor.low();
                             sleep(2000);
                             relaySensor.high();
