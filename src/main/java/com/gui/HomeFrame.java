@@ -246,7 +246,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoInverno.start();
-    };
+    }
 
     public void modoVerao() {
 
@@ -310,7 +310,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoVerao.start();
-    };
+    }
 
     public void getTempHumidade(Integer sleepTime) {
 
