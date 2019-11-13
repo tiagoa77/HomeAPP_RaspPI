@@ -87,7 +87,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         //milisec*sec*min - 1000*60*60
         
 
-        //temporario();
+        temporario();
         //TESTES RELAY
 //        System.out.println("Relay 1 - relay Inverno");
 //        relay1.high();
@@ -114,7 +114,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         else{
             this.temperaturaDefinida = 20;
             jToggleButtonOff.doClick();
-        }
+        };
         
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
 
@@ -122,11 +122,13 @@ public final class HomeFrame extends javax.swing.JFrame {
         wiredSensorTemps("28-020192453134", 0.0, 2000, "ARNOVO");
         wiredSensorTemps("28-03129779f399", 2.6, 2000, "ARINSUFLACAO");
         wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
+        
+        startCPUVent(5000);
+        restart_sensores(1000 * 10);
         modoInverno();
         modoVerao();
 
-        startCPUVent(5000);
-        restart_sensores(1000 * 10);
+        
         
     }
 
@@ -190,6 +192,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                         //Se o botão estiver selecionado
                         if (jToggleButtonInverno.isSelected()) {
                             temperaturaAmbiente = tempHumid.get("Temperatura");
+                            
 
                             if (temperaturaAmbiente <= temperaturaDefinida) {
                                 System.out.println(temperaturaAmbiente + " <= " + temperaturaDefinida);
@@ -246,7 +249,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoInverno.start();
-    }
+    };
 
     public void modoVerao() {
 
@@ -310,7 +313,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoVerao.start();
-    }
+    };
 
     public void getTempHumidade(Integer sleepTime) {
 
