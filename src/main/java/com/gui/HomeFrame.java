@@ -402,7 +402,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                          if (temperaturaRaspi >= 55) {
                             
                             relayVentoinha.high();
-                            sleep(10000*60);
+                            sleep(1000*60);
                             relayVentoinha.low();
                         }
                         
@@ -430,7 +430,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                         
                         if (temperaturaAmbiente == 0.0 || temperaturaArInsuflacao == 0.0 || temperaturaArNovo == 0.0 || temperaturaArRetorno == 0.0) {
                             relaySensor.low();
-                            sleep(90*1000);
+                            sleep(2000);
                             relaySensor.high();
 
                         }
