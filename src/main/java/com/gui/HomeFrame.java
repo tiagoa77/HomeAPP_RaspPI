@@ -42,7 +42,10 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relaySensoresName = "Relay Sensores";
     private static final Pin relayVentoinhaCPU = RaspiPin.GPIO_05;
     private static final String relayVentoinhaCPUName = "Relay Ventoinha CPU";
+<<<<<<< HEAD
     
+=======
+>>>>>>> parent of 3fbb3a6... Update HomeFrame.java
 
     //volatile variables
     public volatile HashMap<String, Float> tempHumid;
@@ -398,9 +401,17 @@ public final class HomeFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
+<<<<<<< HEAD
                         
                          if (temperaturaRaspi >= 55) {
                             
+=======
+                        System.out.println("temperaturaRAspi" + temperaturaRaspi);
+                        if (temperaturaRaspi >= 55) {
+
+                            relayVentoinha.low();
+                            sleep(1000*60);
+>>>>>>> parent of 3fbb3a6... Update HomeFrame.java
                             relayVentoinha.high();
                             sleep(10000*60);
                             relayVentoinha.low();
@@ -429,6 +440,10 @@ public final class HomeFrame extends javax.swing.JFrame {
                         sleep(time);
                         
                         if (temperaturaAmbiente == 0.0 || temperaturaArInsuflacao == 0.0 || temperaturaArNovo == 0.0 || temperaturaArRetorno == 0.0) {
+<<<<<<< HEAD
+=======
+                            System.out.println("\ntemperaturaAmbiente: " + temperaturaAmbiente + "temperaturaArInsuflacao: " + temperaturaArInsuflacao + "temperaturaArNovo: " + temperaturaArNovo + "temperaturaArRetorno: " + temperaturaArRetorno);
+>>>>>>> parent of 3fbb3a6... Update HomeFrame.java
                             relaySensor.low();
                             sleep(90*1000);
                             relaySensor.high();
