@@ -42,10 +42,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relaySensoresName = "Relay Sensores";
     private static final Pin relayVentoinhaCPU = RaspiPin.GPIO_05;
     private static final String relayVentoinhaCPUName = "Relay Ventoinha CPU";
-<<<<<<< HEAD
-    
-=======
->>>>>>> parent of 3fbb3a6... Update HomeFrame.java
+    private static final Integer tempMaxCPU = 60;
 
     //volatile variables
     public volatile HashMap<String, Float> tempHumid;
@@ -55,8 +52,8 @@ public final class HomeFrame extends javax.swing.JFrame {
     public volatile Double temperaturaArNovo;
     public volatile Double temperaturaArInsuflacao;
     public volatile Double temperaturaArRetorno;
-    public volatile Integer temperaturaRaspi;
-    
+    public volatile Float temperaturaRaspi;
+
     public volatile boolean flagInvernoLigar;
     public volatile boolean flagInvernoDesligar;
     public volatile boolean flagVeraoLigar;
@@ -68,8 +65,8 @@ public final class HomeFrame extends javax.swing.JFrame {
     final GpioPinDigitalOutput relay2 = gpio.provisionDigitalOutputPin(relayVentVer, relayVentVerName, pinStateOff);
     final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOff);
     final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOff);
-    final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOff);
-    final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOff);
+    final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOn);
+    final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOn);
 
     public HomeFrame(Sistema s) throws InterruptedException, IOException, ParseException {
 
@@ -81,39 +78,47 @@ public final class HomeFrame extends javax.swing.JFrame {
         this.temperaturaArNovo = 0.0;
         this.temperaturaArInsuflacao = 0.0;
         this.temperaturaArRetorno = 0.0;
+        this.temperaturaRaspi = 0.0f;
+        
 
+        Calendar caland = new GregorianCalendar();
+        Integer month = caland.get(Calendar.MONTH) + 1;
+        
         initComponents();
         clock();
-        getTempRaspi(5000);
-        //milisec*sec*min - 1000*60*60
-        startCPUVent(5000);
-        restart_sensores(1000*10);
+        getTempRaspi(1000);
+        
 
         //temporario();
-        //TESTES RELAY
-//        System.out.println("Relay 1 - relay Inverno");
-//        relay1.high();
-//        sleep(2000);
-//        System.out.println("Relay 2 - relay Verao");
-//        relay2.high();
-//        sleep(2000);
-//        System.out.println("Relay 3 - relay Valvula A");
-//        relay3.high();
-//        sleep(2000);
-//        System.out.println("Relay 4 - relay Valvula A");
-//        relay4.high();
-//        sleep(2000);
-        jToggleButtonOff.doClick();
 
+        if(month==10 || month==11 || month==12 || month==1 || month==2 || month==3){
+            this.temperaturaDefinida = 25;
+            jToggleButtonInverno.doClick();
+            
+        } else if (month==6 || month==7 || month==8 || month==9){
+            this.temperaturaDefinida = 13;
+            jToggleButtonVerao.doClick();
+            
+        }
+        else{
+            this.temperaturaDefinida = 20;
+            jToggleButtonOff.doClick();
+        };
+        
         jLabelTemperaturaDefinida.setText(Integer.toString(temperaturaDefinida) + " ºC");
 
         getTempHumidade(2000);
         wiredSensorTemps("28-020192453134", 0.0, 2000, "ARNOVO");
         wiredSensorTemps("28-03129779f399", 2.6, 2000, "ARINSUFLACAO");
         wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
+        
+        startCPUVent(5000);
+        restart_sensores(1000 * 10);
         modoInverno();
         modoVerao();
 
+        
+        
     }
 
     public void clock() {
@@ -143,7 +148,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         clock.start();
-    }
+    };
 
     public void temporario() {
 
@@ -161,7 +166,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         temporario.start();
-    }
+    };
 
     public void modoInverno() {
 
@@ -171,15 +176,15 @@ public final class HomeFrame extends javax.swing.JFrame {
                     temperaturaAmbiente = 0.0f;
                     flagInvernoLigar = false;
                     flagInvernoDesligar = false;
+                    
                     while (true) {
 
                         //Se o botão estiver selecionado
                         if (jToggleButtonInverno.isSelected()) {
-                            temperaturaAmbiente = tempHumid.get("Temperatura");
 
                             if (temperaturaAmbiente <= temperaturaDefinida) {
-                                System.out.println(temperaturaAmbiente + " <= " + temperaturaDefinida);
-                                System.out.println("Está o inverno ativo");
+                                
+                                //System.out.println("Está o inverno ativo");
 
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
@@ -201,7 +206,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 flagInvernoDesligar = false;
 
                             } else {
-                                System.out.println("Nao abrir relays de Inverno");
+                                //System.out.println("Nao abrir relays de Inverno");
 
                                 if (!flagInvernoDesligar) {
                                     //Relay Inverno Ligado
@@ -232,7 +237,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoInverno.start();
-    }
+    };
 
     public void modoVerao() {
 
@@ -248,8 +253,8 @@ public final class HomeFrame extends javax.swing.JFrame {
                         if (jToggleButtonVerao.isSelected()) {
 
                             if (temperaturaArNovo <= temperaturaDefinida) {
-                                System.out.println(temperaturaArNovo + " <= " + temperaturaDefinida);
-                                System.out.println("Está o verao ativo");
+                                //System.out.println(temperaturaArNovo + " <= " + temperaturaDefinida);
+                                //System.out.println("Está o verao ativo");
 
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
@@ -271,7 +276,7 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 flagVeraoDesligar = false;
 
                             } else {
-                                System.out.println("Nao abrir relays de Verao");
+                                //System.out.println("Nao abrir relays de Verao");
 
                                 if (!flagVeraoDesligar) {
                                     //Relay Inverno Desligado
@@ -296,7 +301,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         modoVerao.start();
-    }
+    };
 
     public void getTempHumidade(Integer sleepTime) {
 
@@ -309,8 +314,13 @@ public final class HomeFrame extends javax.swing.JFrame {
 
                         tempHumid = dht.getTemperature(29);
                         //0 - Temp // 1 - Humidade
-                        jLabelAmbienteValor.setText(Float.toString(tempHumid.get("Temperatura")) + " ºC");
-                        jLabelHumidadeValor.setText(Float.toString(tempHumid.get("Humidade")) + " %");
+                        
+                        temperaturaAmbiente=tempHumid.get("Temperatura");
+                        humidadeAmbiente=tempHumid.get("Humidade");
+                        jLabelAmbienteValor.setText(Float.toString(temperaturaAmbiente) + " ºC");
+                        jLabelHumidadeValor.setText(Float.toString(humidadeAmbiente) + " %");
+                        //jLabelAmbienteValor.setText(Float.toString(tempHumid.get("Temperatura")) + " ºC");
+                        //jLabelHumidadeValor.setText(Float.toString(tempHumid.get("Humidade")) + " %");
                         sleep(sleepTime);
 
                     }
@@ -321,7 +331,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         tempHum.start();
-    }
+    };
 
     public void wiredSensorTemps(String wiredDevices, Double valor, Integer sleepTimeMilis, String option) {
 
@@ -350,7 +360,6 @@ public final class HomeFrame extends javax.swing.JFrame {
 
                 }
             }
-
         };
         wiredSensorTemps.start();
     };
@@ -372,16 +381,16 @@ public final class HomeFrame extends javax.swing.JFrame {
         incrementarTemp.start();
     };
     
-    
     public void getTempRaspi(Integer sleepTime) {
 
         Thread tempRaspi = new Thread() {
             public void run() {
                 try {
                     while (true) {
+                        String temp = Sistema.getSystemTemp();
+                        temperaturaRaspi = Float.parseFloat(temp);
+                        jLabelCPUTemp.setText("CPU: " + temp + " ºC");
                         
-                        jLabelCPUTemp.setText("CPU: " + Sistema.getSystemTemp() + " ºC");
-                        temperaturaRaspi = Integer.parseInt(Sistema.getSystemTemp());
                         sleep(sleepTime);
                     }
 
@@ -395,28 +404,19 @@ public final class HomeFrame extends javax.swing.JFrame {
         tempRaspi.start();
     };
     
-        public void startCPUVent(Integer sleepTime) {
+    public void startCPUVent(Integer sleepTime) {
 
         Thread ventoinha = new Thread() {
             public void run() {
                 try {
                     while (true) {
-<<<<<<< HEAD
-                        
-                         if (temperaturaRaspi >= 55) {
-                            
-=======
-                        System.out.println("temperaturaRAspi" + temperaturaRaspi);
-                        if (temperaturaRaspi >= 55) {
+                        //System.out.println("temperaturaRAspi" + temperaturaRaspi);
+                        if (temperaturaRaspi >= tempMaxCPU) {
 
                             relayVentoinha.low();
-                            sleep(1000*60);
->>>>>>> parent of 3fbb3a6... Update HomeFrame.java
-                            relayVentoinha.high();
                             sleep(10000*60);
-                            relayVentoinha.low();
+                            relayVentoinha.high();
                         }
-                        
                         sleep(sleepTime);
                     }
 
@@ -427,8 +427,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         };
         ventoinha.start();
     };
-    
-                        
+                     
 
     public void restart_sensores(Integer time) {
 
@@ -438,18 +437,13 @@ public final class HomeFrame extends javax.swing.JFrame {
                     while (true) {
                         //time until check again temps
                         sleep(time);
-                        
+
                         if (temperaturaAmbiente == 0.0 || temperaturaArInsuflacao == 0.0 || temperaturaArNovo == 0.0 || temperaturaArRetorno == 0.0) {
-<<<<<<< HEAD
-=======
-                            System.out.println("\ntemperaturaAmbiente: " + temperaturaAmbiente + "temperaturaArInsuflacao: " + temperaturaArInsuflacao + "temperaturaArNovo: " + temperaturaArNovo + "temperaturaArRetorno: " + temperaturaArRetorno);
->>>>>>> parent of 3fbb3a6... Update HomeFrame.java
+                            //System.out.println("\ntemperaturaAmbiente: " + temperaturaAmbiente + "temperaturaArInsuflacao: " + temperaturaArInsuflacao + "temperaturaArNovo: " + temperaturaArNovo + "temperaturaArRetorno: " + temperaturaArRetorno);
                             relaySensor.low();
                             sleep(90*1000);
                             relaySensor.high();
-
                         }
-                        
                     }
 
                 } catch (InterruptedException ex) {
@@ -458,10 +452,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             }
         };
         restart_sensores.start();
-    }
-
-    ;
-    
+    };
     
     /**
      * This method is called from within the constructor to initialize the form.
