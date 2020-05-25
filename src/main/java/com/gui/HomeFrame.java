@@ -42,7 +42,7 @@ public final class HomeFrame extends javax.swing.JFrame {
     private static final String relaySensoresName = "Relay Sensores";
     private static final Pin relayVentoinhaCPU = RaspiPin.GPIO_05;
     private static final String relayVentoinhaCPUName = "Relay Ventoinha CPU";
-    private static final Integer tempMaxCPU = 60;
+    private static final Integer tempMaxCPU = 50;
 
     //volatile variables
     public volatile HashMap<String, Float> tempHumid;
@@ -95,8 +95,9 @@ public final class HomeFrame extends javax.swing.JFrame {
             this.temperaturaDefinida = 25;
             jToggleButtonInverno.doClick();
             
+            
         } else if (month==6 || month==7 || month==8 || month==9){
-            this.temperaturaDefinida = 13;
+            this.temperaturaDefinida = 15;
             jToggleButtonVerao.doClick();
             
         }
@@ -113,7 +114,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
         
         startCPUVent(5000);
-        restart_sensores(1000 * 10);
+        //restart_sensores(1000 * 10);
         modoInverno();
         modoVerao();
 
@@ -259,8 +260,8 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 //Não mudar relay se já estiverem nas posiçoes certas e a temperatura tiver diferença de 1 grau
                                 //FALTA FAZER CONDIÇAO da diferença de 1 grau
                                 if (!flagVeraoLigar) {
-                                    //Relay Inverno Desligado
-                                    relay1.low();
+                                    //Relay Inverno Ligado - Não passar energia
+                                    relay1.high();
                                     //Relay Verão Ligado
                                     relay2.high();
                                     //Valvula A a OFF
@@ -279,8 +280,8 @@ public final class HomeFrame extends javax.swing.JFrame {
                                 //System.out.println("Nao abrir relays de Verao");
 
                                 if (!flagVeraoDesligar) {
-                                    //Relay Inverno Desligado
-                                    relay1.low();
+                                    //Relay Inverno Ligado
+                                    relay1.high();
                                     //Relay Verão Desligado
                                     relay2.low();
                                     //Valvula A OFF
