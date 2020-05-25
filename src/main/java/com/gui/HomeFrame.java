@@ -114,7 +114,7 @@ public final class HomeFrame extends javax.swing.JFrame {
         wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
         
         startCPUVent(5000);
-        //restart_sensores(1000 * 10);
+        restart_sensores(1000 * 10);
         modoInverno();
         modoVerao();
 
