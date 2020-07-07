@@ -911,14 +911,24 @@ public final class HomeFrame extends javax.swing.JFrame {
             jToggleButtonInverno.setSelected(false);
             jToggleButtonVerao.setSelected(false);
 
+// Alteração por causa do rele estar ao contrario
+//            //Relay Inverno Desligado
+//            relay1.low();
+//            //Relay Verão Ligado
+//            relay2.high();
+//            //Valvula A a OFF
+//            relay3.low();
+//            //Valvula B a OFF
+//            relay4.low();
+
             //Relay Inverno Desligado
-            relay1.low();
-            //Relay Verão Ligado
-            relay2.high();
-            //Valvula A a OFF
-            relay3.low();
-            //Valvula B a OFF
-            relay4.low();
+             relay1.low();
+             //Relay Verão Ligado
+             relay2.low();
+             //Valvula A a OFF
+             relay3.high();
+             //Valvula B a OFF
+             relay4.high();
 
         } else {
             jToggleButtonManual.setSelected(true);
