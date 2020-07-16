@@ -61,10 +61,10 @@ public final class HomeFrame extends javax.swing.JFrame {
 
     final GpioController gpio = GpioFactory.getInstance();
     //provision gpio pin as an output pin and turn on
-    final GpioPinDigitalOutput relay1 = gpio.provisionDigitalOutputPin(relayVentInv, relayVentInvName, pinStateOff);
-    final GpioPinDigitalOutput relay2 = gpio.provisionDigitalOutputPin(relayVentVer, relayVentVerName, pinStateOff);
-    final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOff);
-    final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOff);
+    final GpioPinDigitalOutput relay1 = gpio.provisionDigitalOutputPin(relayVentInv, relayVentInvName, pinStateOn);
+    final GpioPinDigitalOutput relay2 = gpio.provisionDigitalOutputPin(relayVentVer, relayVentVerName, pinStateOn);
+    final GpioPinDigitalOutput relay3 = gpio.provisionDigitalOutputPin(relayValvulaA, relayValvulaAName, pinStateOn);
+    final GpioPinDigitalOutput relay4 = gpio.provisionDigitalOutputPin(relayValvulaB, relayValvulaBName, pinStateOn);
     final GpioPinDigitalOutput relaySensor = gpio.provisionDigitalOutputPin(relaySensores, relaySensoresName, pinStateOn);
     final GpioPinDigitalOutput relayVentoinha = gpio.provisionDigitalOutputPin(relayVentoinhaCPU, relayVentoinhaCPUName, pinStateOn);
 
@@ -93,7 +93,7 @@ public final class HomeFrame extends javax.swing.JFrame {
             jToggleButtonInverno.doClick();
 
         } else if (month == 6 || month == 7 || month == 8 || month == 9) {
-            this.temperaturaDefinida = 15;
+            this.temperaturaDefinida = 16;
             jToggleButtonVerao.doClick();
 
         } else {
@@ -105,8 +105,9 @@ public final class HomeFrame extends javax.swing.JFrame {
 
         getTempHumidade(2000);
         wiredSensorTemps("28-020192453134", 0.0, 2000, "ARNOVO");
-        wiredSensorTemps("28-03129779f399", 2.6, 2000, "ARINSUFLACAO");
-        wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
+//        wiredSensorTemps("28-03129779f399", 2.6, 2000, "ARINSUFLACAO");
+//        wiredSensorTemps("28-031597793897", 1.9, 2000, "RETORNO");
+        wiredSensorTemps("28-031597793374", 2.6, 2000, "ARINSUFLACAO");
 
         startCPUVent(5000);
         restart_sensores(1000 * 10);
